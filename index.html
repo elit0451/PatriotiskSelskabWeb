@@ -1,0 +1,163 @@
+<html ng-app="mainApp">
+
+<head>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.js"></script>
+  <script src="js/app.js"></script>
+
+</head>
+
+<body ng-controller="mainController">
+  <div class="mainWrapper">
+    <div class="header">
+      <div id="headerLogout">
+        <span>user@email.com</span> <br />
+        <span><a href="login.html">Logout</a></span>
+      </div>
+
+    </div>
+    <div id="headerLogo">
+      <img src="img/header-logo.png" alt="logo" />
+    </div>
+    <div class="searchArea">
+      <span>Home</span>
+      <div id="searchTable">
+        <table>
+          <form action="#">
+            <tr id="searchInputLabels">
+              <td><span>Year</span></td>
+              <td><span>Block</span></td>
+              <td><span>Sub-block</span></td>
+              <td><span>Trial Group</span></td>
+            </tr>
+            <tr id="searchInputs">
+              <td>
+                <select>
+                      <option value="" disabled selected>Select</option>
+                      <option value="2018">2018</option>
+                      <option value="2017">2017</option>
+                      <option value="2016">2016</option>
+                      <option value="2015">2015</option>
+                    </select>
+              </td>
+              <td>
+                <select>
+                      <option value="" disabled selected>Select</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                    </select>
+              </td>
+              <td>
+                <select>
+                      <option value="" disabled selected>Select</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                    </select>
+              </td>
+              <td>
+                <select>
+                      <option value="" disabled selected>Select</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                    </select>
+              </td>
+              <td><button>Search</button></td>
+            </tr>
+          </form>
+        </table>
+      </div>
+      <div class="separator">
+        <div class="separatorLine separatorLineFirst">
+          <hr>
+        </div>
+        <div id="separatorCircle">
+          <span class="fa fa-dot-circle"></span>
+        </div>
+        <div class="separatorLine separatorLineLast">
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div class="mainContent">
+      <div class="mainContentHeader yearsHeader">
+        <span>YEARS<a href="#"><div class="fa fa-edit"></div></a></span>
+      </div>
+      <div class="contentGrid">
+        <a href="addYear.html">
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <img id="plusImg" src="img/plus.png" alt="add" />
+          </div>
+        </a>
+        <a href="#">
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <span>2018</span>
+          </div>
+        </a>
+        <a href="#">
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <span>2017</span>
+          </div>
+        </a>
+        <a href="#">
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <span>2016</span>
+          </div>
+        </a>
+        <a href="#">
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <span>2015</span>
+          </div>
+        </a>
+        <a href="#">
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <span>2014</span>
+          </div>
+        </a>
+        <a href="#">
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <span>2013</span>
+          </div>
+        </a>
+        <a href="#">
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <span>2012</span>
+          </div>
+        </a>
+        <a href="#">
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <span>2011</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="footer">
+      <div id="footerTxt">
+        <span>This website was developed by David Alves &amp; Elitsa Marinovska</span>
+      </div>
+      <div id="footerLogo">
+        <a href="http://patriotisk.dk"><img src="img/footer-logo.png" alt="logo"/></a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

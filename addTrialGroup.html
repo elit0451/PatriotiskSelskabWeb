@@ -1,0 +1,127 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div class="mainWrapper nosearch">
+    <div class="header">
+      <div id="headerLogout">
+        <span>user@email.com</span> <br />
+        <span><a href="login.html">Logout</a></span>
+      </div>
+
+    </div>
+    <div id="headerLogo">
+      <img src="img/header-logo.png" alt="logo" />
+    </div>
+    <div class="searchArea">
+      <span><a href="index.html">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="addYear.html">2019</a><div class ="fa fa-seedling" id="seedling"></div><a href="addBlock.html">Block x</a><div class ="fa fa-seedling" id="seedling"></div>
+        <a href ="addSubBlock.html">Sub-block x</a><div class ="fa fa-seedling" id="seedling"></div>Trial Group </span>
+    </div>
+    <div class="mainContent">
+      <div class="contentGrid blockGrid">
+        <div class="detailInfo">
+          <div id="detailHeader">
+            <span>Trial Group <input type="text" size="1" maxlength="1"  placeholder="1"/><a href="#"><div class="fa fa-save"></div></a></span>
+          </div>
+          <div id="detailContent">
+            <span class="detailBold">CROP</span>
+            <span class="pull-right">
+                <select id="selectWeed">
+                      <option value="" disabled selected>Select</option>
+                      <option value="1">Weed 1</option>
+                      <option value="3">Weed 3</option>
+                      <option value="4">Weed 4</option>
+                      <option value="5">Weed 5</option>
+                </select>
+            </span><br />
+            <hr />
+            <span class="detailBold">COMMENT</span><br /><br />
+            <textarea placeholder="Here you can write a comment about this trial group."></textarea><br />
+            <hr />
+            <br /><br />
+            <span class="detailBoldHeader">TREATMENT</span><br />
+            <hr />
+          </div>
+          <div id="detailFooter"></div>
+        </div>
+        <div class="gridLine"></div>
+        <div class="detailGridContent addTreatmentGrid">
+          <div class="addTreatmentHeader">
+            <span>NEW TREATMENT</span>
+          </div>
+          <div class="addTreatmentContent">
+            <div class="addTreatmentContentLeft">
+              <div class="underlineInput">
+                <span class="fa fa-wpforms"></span><input type="text" placeholder="STAGE" />
+              </div><br />
+              <div id="treatmentSecondLevel">
+                <div class="underlineInput">
+                  <span class="fa fa-prescription-bottle"></span><input type="text" placeholder="LOGCHEM" />
+                </div><br />
+                <div class="underlineInput">
+                  <span class="fa fa-flask"></span><input type="text" placeholder="CHEMICAL" />
+                </div>
+              </div>
+              <div class="addedChemicals">
+                <span class="fa fa-trash-alt"></span>Chemical 23 <br />
+                <span class="fa fa-trash-alt"></span>Chemical 25
+              </div>
+            </div>
+            <div class="addTreatmentContentRight">
+              <div class="underlineInput">
+                <span class="fa fa-calendar-alt"></span><input type="date" />
+              </div>
+              <div id="logDosage">
+                <span class="fa fa-vial"></span>
+                <div class="logInputTop">
+                  <input type="text" placeholder="1" />
+                  <input type="text" placeholder="0.5" />
+                  <input type="text" placeholder="0.25" />
+                </div>
+                <div class="logInputBottom">
+                  <input type="text" placeholder="0.125" />
+                  <input type="text" placeholder="0" />
+                  <input type="text" placeholder="UNIT" />
+                </div>
+              </div>
+              <div>
+                <div class="underlineInput dosageInput">
+                  <span class="fa fa-vial"></span>
+                  <input type="text" placeholder="DOSAGE" />
+                </div>
+                <input id="unitInput" type="text" placeholder="UNIT" />
+                <span class="fa fa-plus"></span>
+              </div><br />
+              <span>0.725 ml</span><br />
+              <span>0.495 ml</span>
+            </div>
+            <div class="addTreatmentContentBottom">
+              <div class="underlineInput">
+                <span class="fa fa-comment"></span><span>COMMENT</span>
+              </div><br />
+              <textarea placeholder="Write a comment about the treatment."></textarea><br />
+              <button>Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div id="footerTxt">
+        <span>This website was developed by David Alves &amp; Elitsa Marinovska</span>
+      </div>
+      <div id="footerLogo">
+        <a href="http://patriotisk.dk"><img src="img/footer-logo.png" alt="logo"/></a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
