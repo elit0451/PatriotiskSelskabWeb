@@ -1,13 +1,4 @@
-<html>
-
-<head>
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-</head>
-
-<body>
-  <div class="mainWrapper nosearch">
+<div class="mainWrapper nosearch">
     <div class="header">
       <div id="headerLogout">
         <span>user@email.com</span> <br />
@@ -19,7 +10,7 @@
       <img src="img/header-logo.png" alt="logo" />
     </div>
     <div class="searchArea">
-      <span><a href="index.html">Home</a><div class ="fa fa-seedling" id="seedling"></div>2018</span>
+      <span><a href="/">Home</a><div class ="fa fa-seedling" id="seedling"></div>{{selectedFieldBlockYear}}</span>
     </div>
     <div class="mainContent">
       <div class="mainContentHeader">
@@ -32,6 +23,7 @@
             <img id="plusImg" src="img/greenPlus.png" alt="add" />
           </div>
         </a>
+        <div ng-repeat="fieldBlock in FieldBlocks" ng-if="fieldBlock.FieldBlockYear == selectedFieldBlockYear">
         <a href="#">
           <div class="contentBlock blockBlock">
             <div class="subBlockBlock" style="width: calc(66% - 3px); height: calc(33% - 3px); top: 0; left: 0;"></div>
@@ -41,92 +33,10 @@
             <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(33% + 3px); left: calc(66% + 3px);"></div>
             <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: 0;"></div>
             <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(66% + 3px);"></div>
-            <span>A</span>
+            <span>{{fieldBlock.BlockChar}}</span>
           </div>
         </a>
-        <a href="#">
-          <div class="contentBlock blockBlock">
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: 0; left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(66% - 3px); height: calc(33% - 3px); top: 0; left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(66% - 3px); height: calc(33% - 3px); top: calc(33% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(33% + 3px); left: calc(66% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(16.5% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(16.5% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(49.5% + 3px);;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(66% + 3px);"></div>
-            <span>B</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock blockBlock">
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(66% - 3px); top: 0; left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: 0; left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(66% - 3px); top: 0; left: calc(66% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(66% - 3px); top: calc(33% + 3px); left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(66% + 3px);"></div>
-            <span>C</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock blockBlock">
-            <div class="subBlockBlock" style="width: calc(66% - 3px); height: calc(33% - 3px); top: 0; left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: 0; left: calc(66% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(33% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(66% - 3px); height: calc(33% - 3px); top: calc(33% + 3px); left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(66% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(66% + 3px);"></div>
-            <span>D</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock blockBlock">
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: 0; left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(66% - 3px); height: calc(33% - 3px); top: 0; left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(66% - 3px); height: calc(33% - 3px); top: calc(33% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(33% + 3px); left: calc(66% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(16.5% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(16.5% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(49.5% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(66% + 3px);"></div>
-            <span>E</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock blockBlock">
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(66% - 3px); top: 0; left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: 0; left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(66% - 3px); top: 0; left: calc(66% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(66% - 3px); top: calc(33% + 3px); left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(66% + 3px);"></div>
-            <span>F</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock blockBlock">
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: 0; left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(66% - 3px); height: calc(33% - 3px); top: 0; left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(66% - 3px); height: calc(33% - 3px); top: calc(33% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(33% + 3px); left: calc(66% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(16.5% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(16.5% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(49.5% + 3px);;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(66% + 3px);"></div>
-            <span>G</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock blockBlock">
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(66% - 3px); top: 0; left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: 0; left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(66% - 3px); top: 0; left: calc(66% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: 0;"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(66% - 3px); top: calc(33% + 3px); left: calc(33% + 3px);"></div>
-            <div class="subBlockBlock" style="width: calc(33% - 3px); height: calc(33% - 3px); top: calc(66% + 3px); left: calc(66% + 3px);"></div>
-            <span>H</span>
-          </div>
-        </a>
+      </div>
       </div>
     </div>
     <div class="footer">
@@ -138,6 +48,3 @@
       </div>
     </div>
   </div>
-</body>
-
-</html>

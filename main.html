@@ -1,0 +1,106 @@
+<div class="mainWrapper">
+    <div class="header">
+      <div id="headerLogout">
+        <span>user@email.com</span> <br />
+        <span><a href="login.html">Logout</a></span>
+      </div>
+
+    </div>
+    <div id="headerLogo">
+      <img src="img/header-logo.png" alt="logo" />
+    </div>
+    <div class="searchArea">
+      <span>Home</span>
+      <div id="searchTable">
+        <table>
+          <form action="#">
+            <tr id="searchInputLabels">
+              <td><span>Year</span></td>
+              <td><span>Block</span></td>
+              <td><span>Sub-block</span></td>
+              <td><span>Trial Group</span></td>
+            </tr>
+            <tr id="searchInputs">
+              <td>
+                <select>
+                      <option value="" disabled selected>Select</option>
+                      <option value="2018">2018</option>
+                      <option value="2017">2017</option>
+                      <option value="2016">2016</option>
+                      <option value="2015">2015</option>
+                    </select>
+              </td>
+              <td>
+                <select>
+                      <option value="" disabled selected>Select</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                    </select>
+              </td>
+              <td>
+                <select>
+                      <option value="" disabled selected>Select</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                    </select>
+              </td>
+              <td>
+                <select>
+                      <option value="" disabled selected>Select</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                    </select>
+              </td>
+              <td><button>Search</button></td>
+            </tr>
+          </form>
+        </table>
+      </div>
+      <div class="separator">
+        <div class="separatorLine separatorLineFirst">
+          <hr>
+        </div>
+        <div id="separatorCircle">
+          <span class="fa fa-dot-circle"></span>
+        </div>
+        <div class="separatorLine separatorLineLast">
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div class="mainContent">
+      <div class="mainContentHeader yearsHeader">
+        <span>YEARS<a href="#"><div class="fa fa-edit"></div></a></span>
+      </div>
+      <div class="contentGrid">
+        <a href="addYear.html">
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <img id="plusImg" src="img/plus.png" alt="add" />
+          </div>
+        </a>
+        <div ng-repeat="fieldBlock in FieldBlocks | unique: 'FieldBlockYear'">
+          <a ng-click="setSelectedFieldBlockYear(fieldBlock.FieldBlockYear)" href="block" >
+          <div class="contentBlock">
+            <img src="img/yearBlock.png" alt="year" />
+            <span>{{ fieldBlock.FieldBlockYear }}</span>
+          </div>
+        </a>
+      </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div id="footerTxt">
+        <span>This website was developed by David Alves &amp; Elitsa Marinovska</span>
+      </div>
+      <div id="footerLogo">
+        <a href="http://patriotisk.dk"><img src="img/footer-logo.png" alt="logo"/></a>
+      </div>
+    </div>
+  </div>
