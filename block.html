@@ -19,50 +19,37 @@
       <img src="img/header-logo.png" alt="logo" />
     </div>
     <div class="searchArea">
-      <span><a href="/">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="year.html">2018</a><div class ="fa fa-seedling" id="seedling"></div>Block D</span>
+      <span><a href="/">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="#!/year/{{selectedFieldBlockYear}}">{{selectedFieldBlockYear}}</a><div class ="fa fa-seedling" id="seedling"></div>Block {{selectedFieldBlockChar}}</span>
     </div>
     <div class="mainContent">
       <div class="contentGrid blockGrid">
           <div class="detailInfo">
             <div id="detailHeader">
-              <span>Block D<a href="#"><div class="fa fa-edit"></div></a></span>
+              <span>Block {{selectedFieldBlockChar}}<a href="#"><div class="fa fa-edit"></div></a></span>
             </div>
             <div id="detailContent">
               <span class="detailBold">LENGTH</span>
-              <span class="pull-right">160 m</span><br />
+              <span class="pull-right">{{FieldBlock.FieldBlockLength}} m</span><br />
               <hr />
                 <span class="detailBold">WIDTH</span>
-                <span class="pull-right">200 m</span><br />
+                <span class="pull-right">{{FieldBlock.FieldBlockWidth}} m</span><br />
                 <hr />
                   <span class="detailBold">AREA</span>
-                  <span class="pull-right">32000 m<sup>2</sup></span><br />
+                  <span class="pull-right">{{FieldBlock.FieldBlockLength * FieldBlock.FieldBlockWidth}} m<sup>2</sup></span><br />
                   <hr />
                     <span class="detailBold">COMMENT</span><br /><br />
-                    <span>This is Block D. It has length 160 m and width 200 m.</span><br />
+                    <span>{{FieldBlock.Comment}}</span><br />
                     <hr />
             </div>
             <div id="detailFooter"></div>
           </div>
           <div class="gridLine"></div>
           <div class="detailGridContent">
-            <a href="#"><div class="subBlockBlock" style="width: calc(66% - 10px); height: calc(33% - 10px); top: 0; left: 0;">
-              <span>A</span>
-            </div></a>
-            <a href="#"><div class="subBlockBlock" style="width: calc(33% - 10px); height: calc(33% - 10px); top: 0; left: calc(66% + 10px);">
-              <span>B</span>
-            </div></a>
-            <a href="#"><div class="subBlockBlock" style="width: calc(33% - 10px); height: calc(33% - 10px); top: calc(33% + 10px); left: 0;">
-              <span>C</span>
-            </div></a>
-            <a href="#"><div class="subBlockBlock" style="width: calc(66% - 10px); height: calc(33% - 10px); top: calc(33% + 10px); left: calc(33% + 10px);">
-              <span>D</span>
-            </div></a>
-            <a href="#"><div class="subBlockBlock" style="width: calc(66% - 10px); height: calc(33% - 10px); top: calc(66% + 10px); left: 0;">
-              <span>E</span>
-            </div></a>
-            <a href="#"><div class="subBlockBlock" style="width: calc(33% - 10px); height: calc(33% - 10px); top: calc(66% + 10px); left: calc(66% + 10px);">
-              <span>F</span>
-            </div></a>
+            <div ng-repeat="subBlock in SubBlocks" ng-if="subBlock.FieldBlockID == FieldBlock.FieldBlockID">
+              <a href="#!/subBlock/{{subBlock.SubBlockID}}"><div class="subBlockBlock" style="width: calc({{subBlock.SubBlockWidth * 100 / FieldBlock.FieldBlockWidth}}% - 10px); height: calc({{subBlock.SubBlockLength * 100 / FieldBlock.FieldBlockLength}}% - 10px); top: {{subBlock.PosL* 100 / FieldBlock.FieldBlockLength}}% ; left: {{subBlock.PosW * 100 / FieldBlock.FieldBlockWidth}}%;">
+              <span>{{subBlock.SubBlockChar}}</span>
+              </div></a>
+          </div>
           </div>
       </div>
     </div>

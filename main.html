@@ -85,8 +85,8 @@
             <img id="plusImg" src="img/plus.png" alt="add" />
           </div>
         </a>
-        <div ng-repeat="fieldBlock in FieldBlocks | unique: 'FieldBlockYear'">
-          <a ng-click="setSelectedFieldBlockYear(fieldBlock.FieldBlockYear)" href="block" >
+        <div ng-repeat="fieldBlock in FieldBlocks | unique: 'FieldBlockYear' | orderBy: '-FieldBlockYear'">
+          <a href="#!/year/{{fieldBlock.FieldBlockYear}}" >
           <div class="contentBlock">
             <img src="img/yearBlock.png" alt="year" />
             <span>{{ fieldBlock.FieldBlockYear }}</span>
