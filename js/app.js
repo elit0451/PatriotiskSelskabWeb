@@ -97,10 +97,19 @@ app.controller('subBlockController', function($scope, $rootScope, $routeParams, 
             });
 
             angular.forEach($scope.TrialGroups, function(value, key){
+                value.Treatment = [];
+                value.LogChemName = "";
+                value.LogChemDosages = [];
                 angular.forEach($rootScope.Treatments, function(treatmentValue, treatmentKey){
                     if(value.TrialGroupID == treatmentValue.TrialGroupID){
-                        value.Treatment = treatmentValue;
+                        value.Treatment.push(treatmentValue);
+                        if(treatmentValue.DoseLog === true)
+                        {
+                            value.LogChemName = treatmentValue.ProductName;
+                            value.LogChemDosages.push(treatmentValue.ProductDose);
+                        }
                 }
+                value.LogChemDosages = value.LogChemDosages.sort().reverse();
             });
         });
     });
@@ -112,14 +121,12 @@ app.controller('subBlockController', function($scope, $rootScope, $routeParams, 
         }
     });
 
+
     $rootScope.selectedSubBlockChar = $scope.SubBlock.SubBlockChar;
     $rootScope.selectedSubBlockID = $scope.SubBlock.SubBlockID; 
 });
 
 app.controller('trialGroupController', function($scope, $rootScope, $routeParams, $http){
-    $http.get("http://10.140.101.13:63780/api/TrialGroups/" + $routeParams.subBlockID)
-    .then(function(response) {
         $scope.TrialGroup = response.data;
-        $rootScope.selectedTrialGroupID = $scope.TrialGroup.TrialGroupID;
-    });    
+        $rootScope.selectedTrialGroup = $scope.TrialGroup.TrialGroupID;
 });

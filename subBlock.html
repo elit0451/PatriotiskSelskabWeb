@@ -39,11 +39,11 @@
           <table>
             <tr>
               <th>Trial Group №</th>
-              <td ng-repeat="trialGroup in SubBlock.TrialGroup">
-                <a href="#">
+              <td ng-repeat="trialGroup in TrialGroups">
+                <a href="#!/trialGroup/{{trialGroup.TrialGroupID}}">
                   <div>
                     <span class="tableHeaderMain">{{trialGroup.TrialGroupNr}}</span><br />
-                    <hr /><span class="tableHeaderSecondary">{{trialGroup.Crop.CropName}}</span>
+                    <hr /><span class="tableHeaderSecondary">{{trialGroup.CropName}}</span>
                   </div>
                 </a>
               </td>
@@ -55,46 +55,46 @@
             </tr>
             <tr>
               <th></th>
-              <td class="chemicalCell" ng-repeat="trialGroup in SubBlock.TrialGroup">
+              <td class="chemicalCell" ng-repeat="trialGroup in TrialGroups">
                 <div>
-                  <span>{{trial}}</span><br />
-                  <span>1 ml</span>
+                  <span>{{trialGroup.LogChemName}}</span><br />
+                  <span>{{trialGroup.LogChemDosages[0]}} ml</span>
                 </div>
               </td>
             </tr>
             <tr>
               <th></th>
-              <td class="chemicalCell">
+              <td class="chemicalCell" ng-repeat="trialGroup in TrialGroups">
                 <div>
-                  <span>Chemical 1</span><br />
-                  <span>0.5 ml</span>
+                  <span>{{trialGroup.LogChemName}}</span><br />
+                  <span>{{trialGroup.LogChemDosages[1]}} ml</span>
                 </div>
               </td>
             </tr>
             <tr>
               <th></th>
-              <td class="chemicalCell">
+              <td class="chemicalCell" ng-repeat="trialGroup in TrialGroups">
                 <div>
-                  <span>Chemical 1</span><br />
-                  <span>0.25 ml</span>
+                  <span>{{trialGroup.LogChemName}}</span><br />
+                  <span>{{trialGroup.LogChemDosages[2]}} ml</span>
                 </div>
               </td>
             </tr>
             <tr>
               <th></th>
-              <td class="chemicalCell">
+              <td class="chemicalCell" ng-repeat="trialGroup in TrialGroups">
                 <div>
-                  <span>Chemical 1</span><br />
-                  <span>0.125 ml</span>
+                  <span>{{trialGroup.LogChemName}}</span><br />
+                  <span>{{trialGroup.LogChemDosages[3]}} ml</span>
                 </div>
               </td>
             </tr>
             <tr>
               <th></th>
-              <td class="chemicalCell">
+              <td class="chemicalCell" ng-repeat="trialGroup in TrialGroups">
                 <div>
-                  <span>Chemical 1</span><br />
-                  <span>0 ml</span>
+                  <span>{{trialGroup.LogChemName}}</span><br />
+                  <span>{{trialGroup.LogChemDosages[4]}} ml</span>
                 </div>
               </td>
             </tr>
