@@ -10,79 +10,70 @@
       <img src="img/header-logo.png" alt="logo" />
     </div>
     <div class="searchArea">
-      <span><a href="index.html">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="year.html">2018</a><div class ="fa fa-seedling" id="seedling"></div><a href="block.html">Block D</a><div class ="fa fa-seedling" id="seedling"></div>
-        <a href ="subBlock.html">Sub-block D</a><div class ="fa fa-seedling" id="seedling"></div>Trial Group 2
+      <span><a href="/">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="#!/year/{{selectedFieldBlockYear}}">{{selectedFieldBlockYear}}</a><div class ="fa fa-seedling" id="seedling"></div><a href="#!/block/{{selectedFieldBlockID}}">Block {{selectedFieldBlockChar}}</a><div class ="fa fa-seedling" id="seedling"></div>
+        <a href="#!/subBlock/{{selectedSubBlockID}}">Sub-block {{selectedSubBlockChar}}</a><div class ="fa fa-seedling" id="seedling"></div>Trial Group {{selectedTrialGroupNr}}
       </span>
     </div>
     <div class="mainContent">
       <div class="contentGrid blockGrid">
         <div class="detailInfo">
           <div id="detailHeader">
-            <span>Trial Group 2<a href="#"><div class="fa fa-edit"></div></a></span>
+            <span>Trial Group {{selectedTrialGroupNr}}<a href="#"><div class="fa fa-edit"></div></a></span>
           </div>
           <div id="detailContent">
             <span class="detailBold">CROP</span>
-            <span class="pull-right">Weed 2</span><br />
+            <span class="pull-right">{{TrialGroup.CropName}}</span><br />
             <hr />
             <span class="detailBold">COMMENT</span><br /><br />
-            <span>This is Trial Group 2. <br /> Trial 1 has 3 treatments - stage 10, 16, 18.</span><br />
+            <span>{{TrialGroup.Comment}}</span><br />
             <hr />
             <br /><br />
             <span class="detailBoldHeader">TREATMENT</span><br />
-            <span class="detailBold">STAGE 10-12</span>
-            <span class="pull-right">20-12-2018</span><br />
-            <span class="detailBoldSmall">CHEMICAL 2</span>
-            <span class="pull-right detailSmall">LOG</span><br />
-            <span class="detailBoldSmall">CHEMICAL 3</span>
-            <span class="pull-right detailSmall">1.45 ml</span><br />
-            <span class="detailBoldSmall">CHEMICAL 4</span>
-            <span class="pull-right detailSmall">2.88 ml</span><br /><br />
+            <div ng-repeat="stage in Stages">
+            <span class="detailBold">STAGE {{stage.stageName}}</span>
+            <span class="pull-right">{{stage.stageDate}}<span ng-if="stage.stageDate == undefined">N/A</span></span><br />
+            <div ng-repeat="product in stage.products">
+              <span class="detailBoldSmall">{{product.productName}}</span>
+              <span class="pull-right detailSmall">{{product.dosage}}<span ng-if="product.dosage != 'LOG'"> ml</span></span><br />
+            </div><br />
             <span class="detailBoldSmaller">COMMENT</span><br />
-            <span class="detailSmaller">This is treatment at stage 10 to 12.</span><br />
+            <span class="detailSmaller">{{stage.stageComment}}</span><br />
             <hr />
-            <span class="detailBold">STAGE 16-18</span>
-            <span class="pull-right">N/A</span><br />
-            <span class="detailBoldSmall">CHEMICAL 5</span>
-            <span class="pull-right detailSmall">0.75 ml</span><br />
-            <span class="detailBoldSmall">CHEMICAL 6</span>
-            <span class="pull-right detailSmall">0.25 ml</span><br /><br />
-            <span class="detailBoldSmaller">COMMENT</span><br />
-            <span class="detailSmaller">This is treatment at stage 16 to 18.</span><br />
-            <hr />
+          </div>
           </div>
           <div id="detailFooter"></div>
         </div>
         <div class="gridLine"></div>
         <div class="detailGridContent chemGroup">
-          <div class="trialCell">
+          <div class="trialCell" ng-if="TrialGroup.LogChemDosages[0] != undefined">
             <span>1</span>
             <hr />
-            <span class="chemTxt">Chemical 2</span><br />
-            <span class="chemTxtSmall">1 ml</span>
+            <span class="chemTxt">{{TrialGroup.LogChemName}}</span><br />
+            <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[0]}} ml</span>
           </div>
-          <div class="trialCell">
-            <span>1</span>
+          <div class="trialCell" ng-if="TrialGroup.LogChemDosages[1] != undefined">
+            <span>2</span>
             <hr />
-            <span class="chemTxt">Chemical 2</span><br />
-            <span class="chemTxtSmall">1 ml</span>
+            <span class="chemTxt">{{TrialGroup.LogChemName}}</span><br />
+            <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[1]}} ml</span>
           </div>
-          <div class="trialCell">
-            <span>1</span>
+          <div class="trialCell" ng-if="TrialGroup.LogChemDosages[2] != undefined">
+            <span>3</span>
             <hr />
-            <span class="chemTxt">Chemical 2</span><br />
-            <span class="chemTxtSmall">1 ml</span>
+            <span class="chemTxt">{{TrialGroup.LogChemName}}</span><br />
+            <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[2]}} ml</span>
           </div>
-          <div class="trialCell">
-            <span>1</span>
+          <div class="trialCell" ng-if="TrialGroup.LogChemDosages[3] != undefined">
+            <span>4</span>
             <hr />
-            <span class="chemTxt">Chemical 2</span><br />
-            <span class="chemTxtSmall">1 ml</span>
+            <span class="chemTxt">{{TrialGroup.LogChemName}}</span><br />
+            <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[3]}} ml</span>
           </div>
-          <div class="trialCell">
-            <span>1</span>
+          <div class="trialCell" ng-if="TrialGroup.LogChemDosages[4] != undefined">
+            <span>5</span>
             <hr />
-            <span class="chemTxt">Chemical 2</span><br />
-            <span class="chemTxtSmall">1 ml</span>
+            <span class="chemTxt">{{TrialGroup.LogChemName}}</span><br />
+            <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[4]}} ml</span>
           </div>
         </div>
       </div>

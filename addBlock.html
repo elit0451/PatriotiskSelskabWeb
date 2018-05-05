@@ -10,27 +10,27 @@
       <img src="img/header-logo.png" alt="logo" />
     </div>
     <div class="searchArea">
-      <span><a href="index.html">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="year.html">2019</a><div class ="fa fa-seedling" id="seedling"></div>Block</span>
+      <span><a href="/">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="#!/addYear/{{addYear}}">{{addYear}}</a><div class ="fa fa-seedling" id="seedling"></div>Block</span>
     </div>
     <div class="mainContent">
       <div class="contentGrid blockGrid">
         <form>
           <div class="detailInfo">
             <div id="detailHeader">
-              <span>Block <input type="text" size="1" maxlength="1"  placeholder="A"/><a href="#"><div class="fa fa-save"></div></a></span>
+              <span>Block <input ng-model="blockChar" type="text" size="1" maxlength="1"  placeholder="A"/><a ng-click="saveBlock()"><div class="fa fa-save"></div></a></span>
             </div>
             <div id="detailContent">
               <span class="detailBold">LENGTH</span>
-              <span class="pull-right"><input type="text" size="4" placeholder="160"/> m</span><br />
+              <span class="pull-right"><input ng-model="length" type="text" size="4" placeholder="160"/> m</span><br />
               <hr />
               <span class="detailBold">WIDTH</span>
-              <span class="pull-right"><input type="text" size="4" placeholder="200"/> m</span><br />
+              <span class="pull-right"><input ng-model="width" type="text" size="4" placeholder="200"/> m</span><br />
               <hr />
               <span class="detailBold">AREA</span>
-              <span class="pull-right">m<sup>2</sup></span><br />
+              <span class="pull-right" ng-if="length != undefined && width != undefined">{{length * width}} m<sup>2</sup></span><br />
               <hr />
               <span class="detailBold">COMMENT</span><br /><br />
-              <textarea placeholder="Here you can write a comment about this block."></textarea><br />
+              <textarea  ng-model="comment" placeholder="Here you can write a comment about this block."></textarea><br />
               <hr />
             </div>
             <div id="detailFooter"></div>
@@ -40,7 +40,7 @@
         <div class="detailGridContent editSubBlockBlock">
           <a href="#">
             <div class="subBlockBlock editSubBlockBlock" style="width: calc(66% - 10px); height: calc(33% - 10px); top: 0; left: 0;">
-              <a href="addSubBlock.html"><span><button>Create</button></span></a>
+              <a><span><button ng-click="createSubBlock()">Create</button></span></a>
             </div>
           </a>
         </div>

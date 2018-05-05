@@ -58,7 +58,7 @@
               <td class="chemicalCell" ng-repeat="trialGroup in TrialGroups">
                 <div>
                   <span>{{trialGroup.LogChemName}}</span><br />
-                  <span>{{trialGroup.LogChemDosages[0]}} ml</span>
+                  <span ng-if="trialGroup.LogChemDosages[0] != undefined">{{trialGroup.LogChemDosages[0]}} ml</span>
                 </div>
               </td>
             </tr>
@@ -67,7 +67,7 @@
               <td class="chemicalCell" ng-repeat="trialGroup in TrialGroups">
                 <div>
                   <span>{{trialGroup.LogChemName}}</span><br />
-                  <span>{{trialGroup.LogChemDosages[1]}} ml</span>
+                  <span ng-if="trialGroup.LogChemDosages[0] != undefined">{{trialGroup.LogChemDosages[1]}} ml</span>
                 </div>
               </td>
             </tr>
@@ -76,7 +76,7 @@
               <td class="chemicalCell" ng-repeat="trialGroup in TrialGroups">
                 <div>
                   <span>{{trialGroup.LogChemName}}</span><br />
-                  <span>{{trialGroup.LogChemDosages[2]}} ml</span>
+                  <span ng-if="trialGroup.LogChemDosages[0] != undefined">{{trialGroup.LogChemDosages[2]}} ml</span>
                 </div>
               </td>
             </tr>
@@ -85,7 +85,7 @@
               <td class="chemicalCell" ng-repeat="trialGroup in TrialGroups">
                 <div>
                   <span>{{trialGroup.LogChemName}}</span><br />
-                  <span>{{trialGroup.LogChemDosages[3]}} ml</span>
+                  <span ng-if="trialGroup.LogChemDosages[0] != undefined">{{trialGroup.LogChemDosages[3]}} ml</span>
                 </div>
               </td>
             </tr>
@@ -94,7 +94,7 @@
               <td class="chemicalCell" ng-repeat="trialGroup in TrialGroups">
                 <div>
                   <span>{{trialGroup.LogChemName}}</span><br />
-                  <span>{{trialGroup.LogChemDosages[4]}} ml</span>
+                  <span ng-if="trialGroup.LogChemDosages[0] != undefined">{{trialGroup.LogChemDosages[4]}} ml</span>
                 </div>
               </td>
             </tr>

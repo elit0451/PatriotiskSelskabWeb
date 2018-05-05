@@ -10,27 +10,27 @@
       <img src="img/header-logo.png" alt="logo" />
     </div>
     <div class="searchArea">
-      <span><a href="index.html">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="addYear.html">2019</a><div class ="fa fa-seedling" id="seedling"></div><a href="addBlock.html">Block x</a><div class ="fa fa-seedling" id="seedling"></div>Sub-block </span>
+      <span><a href="/">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="#!/addYear/{{addYear}}">{{addYear}}</a><div class ="fa fa-seedling" id="seedling"></div><a href="#!/addBlock/">Block x</a><div class ="fa fa-seedling" id="seedling"></div>Sub-block </span>
     </div>
     <div class="mainContent">
       <div class="contentGrid blockGrid">
         <form>
           <div class="detailInfo">
             <div id="detailHeader">
-              <span>Sub-block <input type="text" size="1" maxlength="1"  placeholder="A"/><a href="#"><div class="fa fa-save"></div></a></span>
+              <span>Sub-block <input ng-model="subBlockChar" type="text" size="1" maxlength="1"  placeholder="A"/><a ng-click="saveSubBlock()"><div class="fa fa-save"></div></a></span>
             </div>
             <div id="detailContent">
               <span class="detailBold">LENGTH</span>
-              <span class="pull-right">70 m</span><br />
+              <span class="pull-right">{{addSubBlock.subBlockLength}} m</span><br />
               <hr />
               <span class="detailBold">WIDTH</span>
-              <span class="pull-right">130 m</span><br />
+              <span class="pull-right">{{addSubBlock.subBlockWidth}} m</span><br />
               <hr />
               <span class="detailBold">AREA</span>
-              <span class="pull-right">1900 m<sup>2</sup></span><br />
+              <span class="pull-right">{{addSubBlock.subBlockLength * addSubBlock.subBlockWidth}} m<sup>2</sup></span><br />
               <hr />
               <span class="detailBold">COMMENT</span><br /><br />
-              <textarea placeholder="Here you can write a comment about this sub-block."></textarea><br />
+              <textarea ng-model="comment" placeholder="Here you can write a comment about this sub-block."></textarea><br />
               <hr />
             </div>
             <div id="detailFooter"></div>
@@ -42,7 +42,7 @@
             <tr>
               <th>Trial Group №</th>
               <td>
-                <a href="addTrialGroup.html">
+                <a href="#!/addTrialGroup">
                   <div>
                     <img src="img/greenPlus.png" alt="add" style="width: 20px; height: 20px;" />
                   </div>

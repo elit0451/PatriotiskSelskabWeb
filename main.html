@@ -22,42 +22,26 @@
             </tr>
             <tr id="searchInputs">
               <td>
-                <select>
+                  <select ng-model="selectedYear" ng-options="x for x in years" ng-change="yearChange()">
                       <option value="" disabled selected>Select</option>
-                      <option value="2018">2018</option>
-                      <option value="2017">2017</option>
-                      <option value="2016">2016</option>
-                      <option value="2015">2015</option>
                     </select>
               </td>
               <td>
-                <select>
+                  <select ng-model="selectedBlock" ng-options="block.BlockChar for block in blocks" ng-change="blockChange()">
                       <option value="" disabled selected>Select</option>
-                      <option value="A">A</option>
-                      <option value="B">B</option>
-                      <option value="C">C</option>
-                      <option value="D">D</option>
                     </select>
               </td>
               <td>
-                <select>
+                  <select ng-model="selectedSubBlock" ng-options="subBlock.SubBlockChar for subBlock in subBlocks" ng-change="subBlockChange()">
                       <option value="" disabled selected>Select</option>
-                      <option value="A">A</option>
-                      <option value="B">B</option>
-                      <option value="C">C</option>
-                      <option value="D">D</option>
                     </select>
               </td>
               <td>
-                <select>
+                  <select ng-model="selectedTrialGroup" ng-options="trialGroup.TrialGroupNr for trialGroup in trialGroups">
                       <option value="" disabled selected>Select</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
                     </select>
               </td>
-              <td><button>Search</button></td>
+              <td><button ng-click="search()">Search</button></td>
             </tr>
           </form>
         </table>
@@ -79,7 +63,7 @@
         <span>YEARS<a href="#"><div class="fa fa-edit"></div></a></span>
       </div>
       <div class="contentGrid">
-        <a href="addYear.html">
+        <a href="#!/addYear/{{FieldBlocks[0].FieldBlockYear + 1}}">
           <div class="contentBlock">
             <img src="img/yearBlock.png" alt="year" />
             <img id="plusImg" src="img/plus.png" alt="add" />
