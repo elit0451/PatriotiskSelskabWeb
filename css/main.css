@@ -471,8 +471,13 @@ body {
   max-height: 55vh;
 }
 
+.subBlockBlock.editSubBlockBlock span {
+  min-width: 70%;
+  max-width: 16vh;
+}
+
 .subBlockBlock.editSubBlockBlock button {
-  width: 16vw;
+  width: 100%;
   background-color: #589F55;
   border: #96B18B;
   border-radius: 5px;

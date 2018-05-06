@@ -17,12 +17,22 @@
         <span>BLOCKS<a ng-click="saveYear()"><div class="fa fa-edit"></div></a></span>
       </div>
       <div class="contentGrid"> 
-        <a href="#!/addBlock">
+        <a ng-click="addBlockButton()">
           <div class="contentBlock blockBlock">
             <div class="subBlockBlock plusBlock" style="width: 100%; height: 100%;"></div>
             <img id="plusImg" src="img/greenPlus.png" alt="add" />
           </div>
         </a>
+        <div ng-repeat="fieldBlock in addFieldBlocks">
+            <a href="#!/block/{{fieldBlock.FieldBlockID}}">
+              <div class="contentBlock blockBlock">
+                <div ng-repeat="subBlock in fieldBlock.subBlocks">
+                <div class="subBlockBlock" style="width: calc({{subBlock.subBlockWidth * 100 / fieldBlock.blockWidth}}% - 3px); height: calc({{subBlock.subBlockLength * 100 / fieldBlock.blockLength}}% - 3px); top: {{subBlock.PosL* 100 / fieldBlock.blockLength}}% ; left: {{subBlock.PosW * 100 / fieldBlock.blockWidth}}%;"></div>
+                </div>
+                <span>{{fieldBlock.blockChar}}</span>
+              </div>
+            </a>
+          </div>
       </div>
     </div>
     <div class="footer">

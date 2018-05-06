@@ -17,26 +17,41 @@
       <div class="contentGrid blockGrid">
         <div class="detailInfo">
           <div id="detailHeader">
-            <span>Trial Group <input type="text" size="1" maxlength="1"  placeholder="1"/><a href="#"><div class="fa fa-save"></div></a></span>
+            <span>Trial Group <input ng-model="trialGroupNr" type="text" size="1" maxlength="1"  placeholder="1"/><a ng-click="saveTrialGroup()"><div class="fa fa-save"></div></a></span>
           </div>
           <div id="detailContent">
             <span class="detailBold">CROP</span>
             <span class="pull-right">
-                <select id="selectWeed">
-                      <option value="" disabled selected>Select</option>
-                      <option value="1">Weed 1</option>
-                      <option value="3">Weed 3</option>
-                      <option value="4">Weed 4</option>
-                      <option value="5">Weed 5</option>
-                </select>
+              <select ng-model="selectedWeed" id="selectWeed" ng-options="weed.CropName for weed in Weeds" >
+                <option value="" disabled selected>Select</option>
+              </select>
             </span><br />
             <hr />
             <span class="detailBold">COMMENT</span><br /><br />
-            <textarea placeholder="Here you can write a comment about this trial group."></textarea><br />
+            <textarea ng-model = "comment" placeholder="Here you can write a comment about this trial group."></textarea><br />
             <hr />
             <br /><br />
             <span class="detailBoldHeader">TREATMENT</span><br />
-            <hr />
+            <div ng-repeat="treatment in Treatments">
+              <span class="detailBold">STAGE {{treatment.Stage}}</span>
+              <span class="pull-right">{{treatment.Date}}
+                <span ng-if="treatment.Date == ''">N/A</span>
+              </span>
+              <br />
+              <div ng-repeat="product in treatment.DisplayProducts">
+                <span class="detailBoldSmall">{{product.productName}}</span>
+                <span class="pull-right detailSmall">{{product.productDose}}
+                  <span ng-if="product.productDose != 'LOG'"> {{product.productUnit}}</span>
+                </span>
+                <br />
+              </div>
+              <br />
+              <span class="detailBoldSmaller">COMMENT</span>
+              <br />
+              <span class="detailSmaller">{{treatment.Comment}}</span>
+              <br />
+              <hr />
+            </div>
           </div>
           <div id="detailFooter"></div>
         </div>
@@ -50,20 +65,20 @@
               <tr>
                 <td>
                   <div class="underlineInput">
-                    <span class="fa fa-wpforms"></span><input type="text" placeholder="STAGE" />
+                    <span class="fa fa-wpforms"></span><input ng-model="stage" type="text" placeholder="STAGE" />
                   </div>
                 </td>
                 <td></td>
                 <td>
                   <div class="underlineInput">
-                    <span class="fa fa-calendar-alt"></span><input type="date" />
+                    <span class="fa fa-calendar-alt"></span><input ng-model="date" type="text" />
                   </div>
                 </td>
               </tr>
               <tr>
                 <td>
                   <div class="underlineInput treatmentSecondLevel">
-                    <span class="fa fa-prescription-bottle"></span><input type="text" placeholder="LOGCHEM" />
+                    <span class="fa fa-prescription-bottle"></span><input ng-model="logChemName" type="text" placeholder="LOGCHEM" />
                   </div>
                 </td>
                 <td></td>
@@ -71,14 +86,14 @@
                   <div id="logDosage">
                     <span class="fa fa-vial"></span>
                     <div class="logInputTop">
-                      <input type="text" placeholder="1" />
-                      <input type="text" placeholder="0.5" />
-                      <input type="text" placeholder="0.25" />
+                      <input ng-model="logDose1" type="text" placeholder="1" />
+                      <input ng-model="logDose2" type="text" placeholder="0.5" />
+                      <input ng-model="logDose3" type="text" placeholder="0.25" />
                     </div>
                     <div class="logInputBottom">
-                      <input type="text" placeholder="0.125" />
-                      <input type="text" placeholder="0" />
-                      <input type="text" placeholder="UNIT" />
+                      <input ng-model="logDose4" type="text" placeholder="0.125" />
+                      <input ng-model="logDose5" type="text" placeholder="0" />
+                      <input ng-model="logDoseUnit" type="text" placeholder="UNIT" />
                     </div>
                   </div>
                 </td>
@@ -86,21 +101,21 @@
               <tr>
                 <td>
                   <div class="underlineInput treatmentSecondLevel">
-                    <span class="fa fa-flask"></span><input type="text" placeholder="CHEMICAL" />
+                    <span class="fa fa-flask"></span><input ng-model="chemName" type="text" placeholder="CHEMICAL" />
                   </div>
                 </td>
                 <td></td>
                 <td>
                   <span class="fa fa-vial"></span>
                   <div class="underlineInput dosageInput">
-                    <input type="text" placeholder="DOSAGE" />
+                    <input ng-model="chemDose" type="text" placeholder="DOSAGE" />
                   </div>
                   <div class="underlineInput unitInput">
-                    <input type="text" placeholder="UNIT" />
+                    <input type="text" ng-model="chemUnit" placeholder="UNIT" />
                   </div>
                 </td>
                 <td class="tableCenter">
-                  <span class="fa fa-plus"></span>
+                  <span ng-click="addChem()" class="fa fa-plus"></span>
                 </td>
               </tr>
               <tr>
@@ -108,22 +123,13 @@
 
                 </td>
               </tr>
-              <tr>
+              <tr ng-repeat="product in Products" >
                 <td class="treatmentThirdLevel alignRight">
-                  <span class="fa fa-trash-alt "></span>Chemical 23
+                  <span class="fa fa-trash-alt "></span>{{product.productName}}
                 </td>
                 <td></td>
                 <td class="treatmentThirdLevel alignLeft">
-                  <span>0.725 ml</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="treatmentThirdLevel alignRight">
-                  <span class="fa fa-trash-alt "></span>Chemical 25
-                </td>
-                <td></td>
-                <td class="treatmentThirdLevel alignLeft">
-                  <span>0.495 ml</span>
+                  <span>{{product.productDose}} {{product.productUnit}}</span>
                 </td>
               </tr>
               <tr>
@@ -135,12 +141,12 @@
               </tr>
               <tr>
                 <td colspan="3">
-                  <textarea placeholder="Write a comment about the treatment."></textarea>
+                  <textarea ng-model="treatmentComment" placeholder="Write a comment about the treatment."></textarea>
                 </td>
               </tr>
               <tr>
                 <td colspan="3">
-                  <button>Add</button>
+                  <button ng-click="addTreatment()">Add</button>
                 </td>
               </tr>
             </table>

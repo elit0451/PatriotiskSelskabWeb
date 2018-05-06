@@ -37,12 +37,15 @@
           </div>
         </form>
         <div class="gridLine"></div>
-        <div class="detailGridContent editSubBlockBlock">
-          <a href="#">
+        <div class="detailGridContent editSubBlockBlock" id="addSubBlockArea">
             <div class="subBlockBlock editSubBlockBlock" style="width: calc(66% - 10px); height: calc(33% - 10px); top: 0; left: 0;">
-              <a><span><button ng-click="createSubBlock()">Create</button></span></a>
+              <a><span id="createSubBlockBtn"><button ng-click="createSubBlock($event)">Create</button></span></a>
             </div>
-          </a>
+            <div ng-repeat="subBlock in addSubBlocks" >
+            <div class="subBlockBlock editSubBlockBlock" style="width: calc({{subBlock.subBlockWidth * 100 / width}}%); height: calc({{subBlock.subBlockLength * 100 / length}}%); top: {{subBlock.PosL* 100 / length}}% ; left: {{subBlock.PosW * 100 / width}}%;">
+              <span>{{subBlock.subBlockChar}}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

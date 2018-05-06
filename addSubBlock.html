@@ -1,89 +1,153 @@
 <div class="mainWrapper nosearch">
-    <div class="header">
-      <div id="headerLogout">
-        <span>user@email.com</span> <br />
-        <span><a href="login.html">Logout</a></span>
-      </div>
+  <div class="header">
+    <div id="headerLogout">
+      <span>user@email.com</span>
+      <br />
+      <span>
+        <a href="login.html">Logout</a>
+      </span>
+    </div>
 
-    </div>
-    <div id="headerLogo">
-      <img src="img/header-logo.png" alt="logo" />
-    </div>
-    <div class="searchArea">
-      <span><a href="/">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="#!/addYear/{{addYear}}">{{addYear}}</a><div class ="fa fa-seedling" id="seedling"></div><a href="#!/addBlock/">Block x</a><div class ="fa fa-seedling" id="seedling"></div>Sub-block </span>
-    </div>
-    <div class="mainContent">
-      <div class="contentGrid blockGrid">
-        <form>
-          <div class="detailInfo">
-            <div id="detailHeader">
-              <span>Sub-block <input ng-model="subBlockChar" type="text" size="1" maxlength="1"  placeholder="A"/><a ng-click="saveSubBlock()"><div class="fa fa-save"></div></a></span>
-            </div>
-            <div id="detailContent">
-              <span class="detailBold">LENGTH</span>
-              <span class="pull-right">{{addSubBlock.subBlockLength}} m</span><br />
-              <hr />
-              <span class="detailBold">WIDTH</span>
-              <span class="pull-right">{{addSubBlock.subBlockWidth}} m</span><br />
-              <hr />
-              <span class="detailBold">AREA</span>
-              <span class="pull-right">{{addSubBlock.subBlockLength * addSubBlock.subBlockWidth}} m<sup>2</sup></span><br />
-              <hr />
-              <span class="detailBold">COMMENT</span><br /><br />
-              <textarea ng-model="comment" placeholder="Here you can write a comment about this sub-block."></textarea><br />
-              <hr />
-            </div>
-            <div id="detailFooter"></div>
+  </div>
+  <div id="headerLogo">
+    <img src="img/header-logo.png" alt="logo" />
+  </div>
+  <div class="searchArea">
+    <span>
+      <a href="/">Home</a>
+      <div class="fa fa-seedling" id="seedling"></div>
+      <a href="#!/addYear/{{addYear}}">{{addYear}}</a>
+      <div class="fa fa-seedling" id="seedling"></div>
+      <a href="#!/addBlock/">Block x</a>
+      <div class="fa fa-seedling" id="seedling"></div>Sub-block </span>
+  </div>
+  <div class="mainContent">
+    <div class="contentGrid blockGrid">
+      <form>
+        <div class="detailInfo">
+          <div id="detailHeader">
+            <span>Sub-block
+              <input ng-model="subBlockChar" type="text" size="1" maxlength="1" placeholder="A" />
+              <a ng-click="saveSubBlock()">
+                <div class="fa fa-save"></div>
+              </a>
+            </span>
           </div>
-        </form>
-        <div class="gridLine"></div>
-        <div class="detailGridContent gridTable">
-          <table>
-            <tr>
-              <th>Trial Group №</th>
-              <td>
-                <a href="#!/addTrialGroup">
-                  <div>
-                    <img src="img/greenPlus.png" alt="add" style="width: 20px; height: 20px;" />
-                  </div>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td class="chemicalCell">
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td class="chemicalCell">
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td class="chemicalCell">
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td class="chemicalCell">
-              </td>
-            </tr>
-            <tr>
-              <th></th>
-              <td class="chemicalCell">
-              </td>
-            </tr>
-          </table>
+          <div id="detailContent">
+            <span class="detailBold">LENGTH</span>
+            <span class="pull-right">{{addSubBlock.subBlockLength}} m</span>
+            <br />
+            <hr />
+            <span class="detailBold">WIDTH</span>
+            <span class="pull-right">{{addSubBlock.subBlockWidth}} m</span>
+            <br />
+            <hr />
+            <span class="detailBold">AREA</span>
+            <span class="pull-right">{{addSubBlock.subBlockLength * addSubBlock.subBlockWidth}} m
+              <sup>2</sup>
+            </span>
+            <br />
+            <hr />
+            <span class="detailBold">COMMENT</span>
+            <br />
+            <br />
+            <textarea ng-model="comment" placeholder="Here you can write a comment about this sub-block."></textarea>
+            <br />
+            <hr />
+          </div>
+          <div id="detailFooter"></div>
         </div>
-      </div>
-    </div>
-    <div class="footer">
-      <div id="footerTxt">
-        <span>This website was developed by David Alves &amp; Elitsa Marinovska</span>
-      </div>
-      <div id="footerLogo">
-        <a href="http://patriotisk.dk"><img src="img/footer-logo.png" alt="logo"/></a>
+      </form>
+      <div class="gridLine"></div>
+      <div class="detailGridContent gridTable">
+        <table>
+          <tr>
+            <th>Trial Group №</th>
+            <td ng-repeat="trialGroup in addTrialGroups">
+              <a>
+                <div>
+                  <span class="tableHeaderMain">{{trialGroup.TrialGroupNr}}</span>
+                  <br />
+                  <hr />
+                  <span class="tableHeaderSecondary">{{trialGroup.Crop}}</span>
+                </div>
+              </a>
+            </td>
+            <td>
+              <a ng-click="addTrialGrButton()">
+                <div>
+                  <img src="img/greenPlus.png" alt="add" style="width: 20px; height: 20px;" />
+                </div>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <th></th>
+            <td class="chemicalCell" ng-repeat="trialGroup in addTrialGroups">
+              <div>
+                <span>{{trialGroup.LogChemName}}</span><br />
+                <span ng-if="trialGroup.LogChemDosages[0] != undefined">{{trialGroup.LogChemDosages[0]}} ml</span>
+              </div>
+            </td>
+            <td class="chemicalCell">
+            </td>
+          </tr>
+          <tr>
+            <th></th>
+            <td class="chemicalCell" ng-repeat="trialGroup in addTrialGroups">
+              <div>
+                <span>{{trialGroup.LogChemName}}</span><br />
+                <span ng-if="trialGroup.LogChemDosages[1] != undefined">{{trialGroup.LogChemDosages[1]}} ml</span>
+              </div>
+            </td>
+            <td class="chemicalCell">
+            </td>
+          </tr>
+          <tr>
+            <th></th>
+            <td class="chemicalCell" ng-repeat="trialGroup in addTrialGroups">
+              <div>
+                <span>{{trialGroup.LogChemName}}</span><br />
+                <span ng-if="trialGroup.LogChemDosages[2] != undefined">{{trialGroup.LogChemDosages[2r]}} ml</span>
+              </div>
+            </td>
+            <td class="chemicalCell">
+            </td>
+          </tr>
+          <tr>
+            <th></th>
+            <td class="chemicalCell" ng-repeat="trialGroup in addTrialGroups">
+              <div>
+                <span>{{trialGroup.LogChemName}}</span><br />
+                <span ng-if="trialGroup.LogChemDosages[3] != undefined">{{trialGroup.LogChemDosages[3]}} ml</span>
+              </div>
+            </td>
+            <td class="chemicalCell">
+            </td>
+          </tr>
+          <tr>
+            <th></th>
+            <td class="chemicalCell" ng-repeat="trialGroup in addTrialGroups">
+              <div>
+                <span>{{trialGroup.LogChemName}}</span><br />
+                <span ng-if="trialGroup.LogChemDosages[4] != undefined">{{trialGroup.LogChemDosages[4]}} ml</span>
+              </div>
+            </td>
+            <td class="chemicalCell">
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
+  <div class="footer">
+    <div id="footerTxt">
+      <span>This website was developed by David Alves &amp; Elitsa Marinovska</span>
+    </div>
+    <div id="footerLogo">
+      <a href="http://patriotisk.dk">
+        <img src="img/footer-logo.png" alt="logo" />
+      </a>
+    </div>
+  </div>
+</div>

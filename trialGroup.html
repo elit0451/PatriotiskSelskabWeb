@@ -1,89 +1,125 @@
 <div class="mainWrapper nosearch">
-    <div class="header">
-      <div id="headerLogout">
-        <span>user@email.com</span> <br />
-        <span><a href="login.html">Logout</a></span>
-      </div>
-
-    </div>
-    <div id="headerLogo">
-      <img src="img/header-logo.png" alt="logo" />
-    </div>
-    <div class="searchArea">
-      <span><a href="/">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="#!/year/{{selectedFieldBlockYear}}">{{selectedFieldBlockYear}}</a><div class ="fa fa-seedling" id="seedling"></div><a href="#!/block/{{selectedFieldBlockID}}">Block {{selectedFieldBlockChar}}</a><div class ="fa fa-seedling" id="seedling"></div>
-        <a href="#!/subBlock/{{selectedSubBlockID}}">Sub-block {{selectedSubBlockChar}}</a><div class ="fa fa-seedling" id="seedling"></div>Trial Group {{selectedTrialGroupNr}}
+  <div class="header">
+    <div id="headerLogout">
+      <span>user@email.com</span>
+      <br />
+      <span>
+        <a href="login.html">Logout</a>
       </span>
     </div>
-    <div class="mainContent">
-      <div class="contentGrid blockGrid">
-        <div class="detailInfo">
-          <div id="detailHeader">
-            <span>Trial Group {{selectedTrialGroupNr}}<a href="#"><div class="fa fa-edit"></div></a></span>
-          </div>
-          <div id="detailContent">
-            <span class="detailBold">CROP</span>
-            <span class="pull-right">{{TrialGroup.CropName}}</span><br />
-            <hr />
-            <span class="detailBold">COMMENT</span><br /><br />
-            <span>{{TrialGroup.Comment}}</span><br />
-            <hr />
-            <br /><br />
-            <span class="detailBoldHeader">TREATMENT</span><br />
-            <div ng-repeat="stage in Stages">
+
+  </div>
+  <div id="headerLogo">
+    <img src="img/header-logo.png" alt="logo" />
+  </div>
+  <div class="searchArea">
+    <span>
+      <a href="/">Home</a>
+      <div class="fa fa-seedling" id="seedling"></div>
+      <a href="#!/year/{{selectedFieldBlockYear}}">{{selectedFieldBlockYear}}</a>
+      <div class="fa fa-seedling" id="seedling"></div>
+      <a href="#!/block/{{selectedFieldBlockID}}">Block {{selectedFieldBlockChar}}</a>
+      <div class="fa fa-seedling" id="seedling"></div>
+      <a href="#!/subBlock/{{selectedSubBlockID}}">Sub-block {{selectedSubBlockChar}}</a>
+      <div class="fa fa-seedling" id="seedling"></div>Trial Group {{selectedTrialGroupNr}}
+    </span>
+  </div>
+  <div class="mainContent">
+    <div class="contentGrid blockGrid">
+      <div class="detailInfo">
+        <div id="detailHeader">
+          <span>Trial Group {{selectedTrialGroupNr}}
+            <a href="#">
+              <div class="fa fa-edit"></div>
+            </a>
+          </span>
+        </div>
+        <div id="detailContent">
+          <span class="detailBold">CROP</span>
+          <span class="pull-right">{{TrialGroup.CropName}}</span>
+          <br />
+          <hr />
+          <span class="detailBold">COMMENT</span>
+          <br />
+          <br />
+          <span>{{TrialGroup.Comment}}</span>
+          <br />
+          <hr />
+          <br />
+          <br />
+          <span class="detailBoldHeader">TREATMENT</span>
+          <br />
+          <div ng-repeat="stage in Stages">
             <span class="detailBold">STAGE {{stage.stageName}}</span>
-            <span class="pull-right">{{stage.stageDate}}<span ng-if="stage.stageDate == undefined">N/A</span></span><br />
+            <span class="pull-right">{{stage.stageDate}}
+              <span ng-if="stage.stageDate == undefined">N/A</span>
+            </span>
+            <br />
             <div ng-repeat="product in stage.products">
               <span class="detailBoldSmall">{{product.productName}}</span>
-              <span class="pull-right detailSmall">{{product.dosage}}<span ng-if="product.dosage != 'LOG'"> ml</span></span><br />
-            </div><br />
-            <span class="detailBoldSmaller">COMMENT</span><br />
-            <span class="detailSmaller">{{stage.stageComment}}</span><br />
+              <span class="pull-right detailSmall">{{product.dosage}}
+                <span ng-if="product.dosage != 'LOG'"> ml</span>
+              </span>
+              <br />
+            </div>
+            <br />
+            <span class="detailBoldSmaller">COMMENT</span>
+            <br />
+            <span class="detailSmaller">{{stage.stageComment}}</span>
+            <br />
             <hr />
-          </div>
-          </div>
-          <div id="detailFooter"></div>
-        </div>
-        <div class="gridLine"></div>
-        <div class="detailGridContent chemGroup">
-          <div class="trialCell" ng-if="TrialGroup.LogChemDosages[0] != undefined">
-            <span>1</span>
-            <hr />
-            <span class="chemTxt">{{TrialGroup.LogChemName}}</span><br />
-            <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[0]}} ml</span>
-          </div>
-          <div class="trialCell" ng-if="TrialGroup.LogChemDosages[1] != undefined">
-            <span>2</span>
-            <hr />
-            <span class="chemTxt">{{TrialGroup.LogChemName}}</span><br />
-            <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[1]}} ml</span>
-          </div>
-          <div class="trialCell" ng-if="TrialGroup.LogChemDosages[2] != undefined">
-            <span>3</span>
-            <hr />
-            <span class="chemTxt">{{TrialGroup.LogChemName}}</span><br />
-            <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[2]}} ml</span>
-          </div>
-          <div class="trialCell" ng-if="TrialGroup.LogChemDosages[3] != undefined">
-            <span>4</span>
-            <hr />
-            <span class="chemTxt">{{TrialGroup.LogChemName}}</span><br />
-            <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[3]}} ml</span>
-          </div>
-          <div class="trialCell" ng-if="TrialGroup.LogChemDosages[4] != undefined">
-            <span>5</span>
-            <hr />
-            <span class="chemTxt">{{TrialGroup.LogChemName}}</span><br />
-            <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[4]}} ml</span>
           </div>
         </div>
+        <div id="detailFooter"></div>
       </div>
-    </div>
-    <div class="footer">
-      <div id="footerTxt">
-        <span>This website was developed by David Alves &amp; Elitsa Marinovska</span>
-      </div>
-      <div id="footerLogo">
-        <a href="http://patriotisk.dk"><img src="img/footer-logo.png" alt="logo"/></a>
+      <div class="gridLine"></div>
+      <div class="detailGridContent chemGroup">
+        <div class="trialCell" ng-if="TrialGroup.LogChemDosages[0] != undefined">
+          <span>1</span>
+          <hr />
+          <span class="chemTxt">{{TrialGroup.LogChemName}}</span>
+          <br />
+          <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[0]}} ml</span>
+        </div>
+        <div class="trialCell" ng-if="TrialGroup.LogChemDosages[1] != undefined">
+          <span>2</span>
+          <hr />
+          <span class="chemTxt">{{TrialGroup.LogChemName}}</span>
+          <br />
+          <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[1]}} ml</span>
+        </div>
+        <div class="trialCell" ng-if="TrialGroup.LogChemDosages[2] != undefined">
+          <span>3</span>
+          <hr />
+          <span class="chemTxt">{{TrialGroup.LogChemName}}</span>
+          <br />
+          <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[2]}} ml</span>
+        </div>
+        <div class="trialCell" ng-if="TrialGroup.LogChemDosages[3] != undefined">
+          <span>4</span>
+          <hr />
+          <span class="chemTxt">{{TrialGroup.LogChemName}}</span>
+          <br />
+          <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[3]}} ml</span>
+        </div>
+        <div class="trialCell" ng-if="TrialGroup.LogChemDosages[4] != undefined">
+          <span>5</span>
+          <hr />
+          <span class="chemTxt">{{TrialGroup.LogChemName}}</span>
+          <br />
+          <span class="chemTxtSmall">{{TrialGroup.LogChemDosages[4]}} ml</span>
+        </div>
       </div>
     </div>
   </div>
+  <div class="footer">
+    <div id="footerTxt">
+      <span>This website was developed by David Alves &amp; Elitsa Marinovska</span>
+    </div>
+    <div id="footerLogo">
+      <a href="http://patriotisk.dk">
+        <img src="img/footer-logo.png" alt="logo" />
+      </a>
+    </div>
+  </div>
+</div>

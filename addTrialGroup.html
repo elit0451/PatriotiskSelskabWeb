@@ -22,17 +22,14 @@
           <div id="detailContent">
             <span class="detailBold">CROP</span>
             <span class="pull-right">
-                <select id="selectWeed">
-                      <option value="" disabled selected>Select</option>
-                      <option value="1">Weed 1</option>
-                      <option value="3">Weed 3</option>
-                      <option value="4">Weed 4</option>
-                      <option value="5">Weed 5</option>
-                </select>
+              <select ng-model="selectedWeed" id="selectWeed" ng-options="weed.CropName for weed in Weeds" >
+                <option value="" disabled selected>Select</option>
+              </select>
+
             </span><br />
             <hr />
             <span class="detailBold">COMMENT</span><br /><br />
-            <textarea placeholder="Here you can write a comment about this trial group."></textarea><br />
+            <textarea ng-model = "comment" placeholder="Here you can write a comment about this trial group."></textarea><br />
             <hr />
             <br /><br />
             <span class="detailBoldHeader">TREATMENT</span><br />
@@ -48,55 +45,54 @@
           <div class="addTreatmentContent">
             <div class="addTreatmentContentLeft">
               <div class="underlineInput">
-                <span class="fa fa-wpforms"></span><input type="text" placeholder="STAGE" />
+                <span class="fa fa-wpforms"></span><input ng-model="stage" type="text" placeholder="STAGE" />
               </div><br />
               <div id="treatmentSecondLevel">
                 <div class="underlineInput">
-                  <span class="fa fa-prescription-bottle"></span><input type="text" placeholder="LOGCHEM" />
+                  <span class="fa fa-prescription-bottle"></span><input ng-model="logChemName" type="text" placeholder="LOGCHEM" />
                 </div><br />
                 <div class="underlineInput">
-                  <span class="fa fa-flask"></span><input type="text" placeholder="CHEMICAL" />
+                  <span class="fa fa-flask"></span><input ng-model="chemName" type="text" placeholder="CHEMICAL" />
                 </div>
               </div>
               <div class="addedChemicals">
-                <span class="fa fa-trash-alt"></span>Chemical 23 <br />
-                <span class="fa fa-trash-alt"></span>Chemical 25
+                <div ng-repeat="product in Products"><span class="fa fa-trash-alt"></span>{{product.chemName}}<br /></div>
               </div>
             </div>
             <div class="addTreatmentContentRight">
               <div class="underlineInput">
-                <span class="fa fa-calendar-alt"></span><input type="date" />
+                <span class="fa fa-calendar-alt"></span><input ng-model="date" type="date" />
               </div>
               <div id="logDosage">
                 <span class="fa fa-vial"></span>
                 <div class="logInputTop">
-                  <input type="text" placeholder="1" />
-                  <input type="text" placeholder="0.5" />
-                  <input type="text" placeholder="0.25" />
+                  <input ng-model="logDose1" type="text" placeholder="1" />
+                  <input ng-model="logDose2" type="text" placeholder="0.5" />
+                  <input ng-model="logDose3" type="text" placeholder="0.25" />
                 </div>
                 <div class="logInputBottom">
-                  <input type="text" placeholder="0.125" />
-                  <input type="text" placeholder="0" />
-                  <input type="text" placeholder="UNIT" />
+                  <input ng-model="logDose4" type="text" placeholder="0.125" />
+                  <input ng-model="logDose5" type="text" placeholder="0" />
+                  <input ng-model="logDoseUnit" type="text" placeholder="UNIT" />
                 </div>
               </div>
               <div>
                 <div class="underlineInput dosageInput">
                   <span class="fa fa-vial"></span>
-                  <input type="text" placeholder="DOSAGE" />
+                  <input ng-model="chemDose" type="text" placeholder="DOSAGE" />
                 </div>
-                <input id="unitInput" type="text" placeholder="UNIT" />
-                <span class="fa fa-plus"></span>
+                <input id="unitInput" ng-model="chemUnit" type="text" placeholder="UNIT" />
+                <span class="fa fa-plus" ng-click="addChem()"></span>
               </div><br />
-              <span>0.725 ml</span><br />
+              <div ng><span>0.725 ml</span><br /></div>
               <span>0.495 ml</span>
             </div>
             <div class="addTreatmentContentBottom">
               <div class="underlineInput">
                 <span class="fa fa-comment"></span><span>COMMENT</span>
               </div><br />
-              <textarea placeholder="Write a comment about the treatment."></textarea><br />
-              <button>Add</button>
+              <textarea ng-model="treatmentComment" placeholder="Write a comment about the treatment."></textarea><br />
+              <button ng-click="addTreatment()">Add</button>
             </div>
           </div>
         </div>

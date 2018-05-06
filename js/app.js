@@ -44,7 +44,7 @@ app.config(function ($routeProvider) {
         })
 
         .when('/addTrialGroup', {
-            templateUrl: 'addTrialGroup.html',
+            templateUrl: 'addTrialGroup2.html',
             controller: 'addTrialGroupController'
         })
 
@@ -132,7 +132,7 @@ app.controller('mainController', function ($rootScope, $scope, $http) {
 
     $http.get("data/FieldBlocks.json")
         .then(function (response) {
-            $rootScope.FieldBlocks = response.data.sort(function(a,b) {return (a.FieldBlockYear < b.FieldBlockYear) ? 1 : ((b.FieldBlockYear < a.FieldBlockYear) ? -1 : 0);} );;
+            $rootScope.FieldBlocks = response.data.sort(function (a, b) { return (a.FieldBlockYear < b.FieldBlockYear) ? 1 : ((b.FieldBlockYear < a.FieldBlockYear) ? -1 : 0); });;
 
             angular.forEach($rootScope.FieldBlocks, function (value, key) {
                 var found = $scope.years.some(function (el) {
@@ -395,29 +395,71 @@ app.controller('addYearController', function ($scope, $routeParams, $rootScope) 
     if ($rootScope.addFieldBlocks == undefined)
         $rootScope.addFieldBlocks = [];
 
-    $scope.saveYear = function() {
+    $scope.saveYear = function () {S
         angular.forEach($rootScope.addFieldBlocks, function (value, key) {
             value.fieldBlockYear = $routeParams.year;
         });
-        console.log($rootScope.addFieldBlocks);
+    };
+
+    $scope.addBlockButton = function () {
+        $rootScope.addBlock = undefined;
+        $rootScope.addSubBlock = undefined;
+        $rootScope.addSubBlocks = undefined;
+        window.location.href = "#!/addBlock/";
     };
 
     $rootScope.addYear = $routeParams.year;
 });
 
 app.controller('addBlockController', function ($scope, $rootScope) {
-
     if ($rootScope.addSubBlocks == undefined)
         $rootScope.addSubBlocks = [];
+    if ($rootScope.addBlock != undefined) {
+        $scope.blockChar = $rootScope.addBlock.blockChar;
+        $scope.length = $rootScope.addBlock.blockLength;
+        $scope.width = $rootScope.addBlock.blockwidth;
+        $scope.comment = $rootScope.addBlock.blockComment;
+    }
 
-    $scope.saveBlock = function() {
+
+    $scope.saveBlock = function () {
         $rootScope.addFieldBlocks.push({ blockChar: $scope.blockChar, blockLength: $scope.length, blockWidth: $scope.width, comment: $scope.comment, subBlocks: $scope.addSubBlocks })
+        window.location.href = "#!/addYear/" + $rootScope.addYear;
     };
 
-    $scope.createSubBlock = function() {
-        $rootScope.addSubBlock = {subBlockLength: 123, subBlockWidth: 321};
-        window.location.href = "#!/addSubBlock/";
+    $scope.createSubBlock = function (element) {
+
+        if ($scope.length != undefined && $scope.width != undefined) {
+            $rootScope.addBlock = { blockChar: $scope.blockChar, blockLength: $scope.length, blockwidth: $scope.width, blockComment: $scope.comment };
+            var subBlockElm = $(angular.element(element.target)).closest('.subBlockBlock');
+            var blockContainer = $('#addSubBlockArea');
+
+            var blHeight = blockContainer.height();
+            var blWidth = blockContainer.width();
+            var subBlHeight = Math.floor(subBlockElm.height());
+            var subBlWidth = Math.floor(subBlockElm.width());
+            var subBlPercHeight = subBlHeight * 100 / blHeight;
+            var subBlPercWidth = subBlWidth * 100 / blWidth;
+            var leftPos = subBlockElm.position().left * $scope.width / blWidth;
+            var topPos = subBlockElm.position().top * $scope.length / blHeight;
+            $rootScope.addSubBlock = { subBlockLength: Math.floor($scope.length * subBlPercHeight / 100), subBlockWidth: Math.floor($scope.width * subBlPercWidth / 100), PosL: topPos, PosW:leftPos };
+            window.location.href = "#!/addSubBlock/";
+        }
     }
+
+    $('.subBlockBlock').resizable({
+        containment: '#addSubBlockArea'
+    });
+    $('.subBlockBlock').draggable({
+        containment: '#addSubBlockArea',
+        start: function (event, ui) {
+            isDraggingMedia = true;
+        },
+        stop: function (event, ui) {
+            isDraggingMedia = false;
+            // blah
+        }
+    });
 });
 
 app.controller('addSubBlockController', function ($scope, $rootScope) {
@@ -425,12 +467,84 @@ app.controller('addSubBlockController', function ($scope, $rootScope) {
     if ($rootScope.addTrialGroups == undefined)
         $rootScope.addTrialGroups = [];
 
-    $scope.saveSubBlock = function() {
-        $rootScope.addSubBlock = {subBlockChar: $scope.subBlockChar, subBlockLength: $scope.addSubBlock.subBlockLength, subBlockWidth: $scope.addSubBlock.subBlockWidth, comment: $scope.comment, trialGroups: $scope.addTrialGroups }
-        $rootScope.addSubBlocks.push($rootScope.addSubBlock);
-    };
+    if ($rootScope.addSubBlock != undefined){
+        $scope.subBlockChar = $rootScope.addBlock.subBlockChar;
+        $scope.comment = $rootScope.addBlock.comment;
+    }
+
+        $scope.saveSubBlock = function () {
+            $rootScope.addSubBlock = { subBlockChar: $scope.subBlockChar, subBlockLength: $scope.addSubBlock.subBlockLength, subBlockWidth: $scope.addSubBlock.subBlockWidth, comment: $scope.comment, trialGroups: $scope.addTrialGroups, PosL: $scope.addSubBlock.PosL, PosW:$scope.addSubBlock.PosW }
+            $rootScope.addSubBlocks.push($rootScope.addSubBlock);
+            window.location.href = "#!/addBlock/";
+        };
+
+    $scope.addTrialGrButton = function () {
+        $rootScope.addBlock.subBlockChar = $scope.subBlockChar;
+        $rootScope.addBlock.comment = $scope.comment;
+        window.location.href = "#!/addTrialGroup/";
+    }
 });
 
-app.controller('addTrialGroupController', function ($scope, $rootScope) {
+app.controller('addTrialGroupController', function ($scope, $rootScope, $http) {
+    $scope.Weeds = [];
+    $scope.Treatments = [];
+    $scope.Products = [];
 
+    $http.get("data/Weeds.json")
+        .then(function (response) {
+            $scope.Weeds = response.data;
+        });
+
+    $scope.addTreatment = function () {
+        $scope.DisplayProducts = JSON.parse(JSON.stringify($scope.Products));
+        $scope.DisplayProducts.push({ productName: $scope.logChemName, productDose: 'LOG', productUnit: 0, doseLog: true });
+        $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose1, productUnit: $scope.logDoseUnit, doseLog: true });
+        $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose2, productUnit: $scope.logDoseUnit, doseLog: true });
+        $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose3, productUnit: $scope.logDoseUnit, doseLog: true });
+        $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose4, productUnit: $scope.logDoseUnit, doseLog: true });
+        $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose5, productUnit: $scope.logDoseUnit, doseLog: true });
+
+
+        $scope.Treatments.push({ Stage: $scope.stage, Date: $scope.date, Products: $scope.Products, DisplayProducts: $scope.DisplayProducts, Comment: $scope.treatmentComment });
+        $scope.Products = [];
+        $scope.chemName = '';
+        $scope.chemDose = '';
+        $scope.chemUnit = '';
+        $scope.stage = '';
+        $scope.date = '';
+        $scope.logChemName = '';
+        $scope.logDose1 = '';
+        $scope.logDose2 = '';
+        $scope.logDose3 = '';
+        $scope.logDose4 = '';
+        $scope.logDose5 = '';
+        $scope.logDoseUnit = '';
+        $scope.treatmentComment = '';
+    };
+
+    $scope.addChem = function () {
+        $scope.Products.push({ productName: $scope.chemName, productDose: $scope.chemDose, productUnit: $scope.chemUnit, doseLog: false });
+        $scope.chemName = '';
+        $scope.chemDose = '';
+        $scope.chemUnit = '';
+    };
+
+    $scope.saveTrialGroup = function () {
+        $scope.LogChemName = "";
+        $scope.LogChemDosages = [];
+
+        angular.forEach($scope.Treatments, function (treatmentValue, treatmentKey) {
+            angular.forEach(treatmentValue.Products, function (value, key) {
+                if (value.doseLog === true) {
+                    $scope.LogChemName = value.productName;
+                    $scope.LogChemDosages.push(value.productDose);
+                }
+            });
+        });
+        $scope.LogChemDosages = $scope.LogChemDosages.sort().reverse();
+
+        $rootScope.addTrialGroups.push({ TrialGroupNr: $scope.trialGroupNr, Crop: $scope.selectedWeed.CropName, LogChemName: $scope.LogChemName, LogChemDosages: $scope.LogChemDosages, TrialComment: $scope.comment, Treatments: $scope.Treatments });
+
+        window.location.href = "#!/addSubBlock/";
+    }
 });
