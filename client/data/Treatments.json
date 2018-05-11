@@ -1,0 +1,17 @@
+[{"TreatmentID":2,"TrialGroupID":1,"TreatmentTypeID":2,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 1","ProductName":"Chem1","ProductDose":0.50,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":2,"TrialGroupID":1,"TreatmentTypeID":2,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 1","ProductName":"Chem1","ProductDose":1.00,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":2,"TrialGroupID":1,"TreatmentTypeID":2,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 1","ProductName":"Chem1","ProductDose":0.75,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":2,"TrialGroupID":1,"TreatmentTypeID":2,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 1","ProductName":"Chem1","ProductDose":0.25,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":2,"TrialGroupID":1,"TreatmentTypeID":2,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 1","ProductName":"Chem1","ProductDose":0.00,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":3,"TrialGroupID":1,"TreatmentTypeID":2,"TreatmentStage":"20","Comment":"Trial group 1","ProductName":"Chem2","ProductDose":3.85,"ProductUnit":"l","DoseLog":false},
+    {"TreatmentID":4,"TrialGroupID":2,"TreatmentTypeID":2,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 2","ProductName":"Chem1","ProductDose":0.00,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":4,"TrialGroupID":2,"TreatmentTypeID":2,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 2","ProductName":"Chem1","ProductDose":3,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":4,"TrialGroupID":2,"TreatmentTypeID":2,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 2","ProductName":"Chem1","ProductDose":2.5,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":4,"TrialGroupID":2,"TreatmentTypeID":2,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 2","ProductName":"Chem1","ProductDose":2,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":4,"TrialGroupID":2,"TreatmentTypeID":2,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 2","ProductName":"Chem1","ProductDose":1.5,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":5,"TrialGroupID":8,"TreatmentTypeID":3,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 2","ProductName":"Chem1","ProductDose":0,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":5,"TrialGroupID":8,"TreatmentTypeID":3,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 2","ProductName":"Chem1","ProductDose":2,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":5,"TrialGroupID":8,"TreatmentTypeID":3,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 2","ProductName":"Chem1","ProductDose":4,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":5,"TrialGroupID":8,"TreatmentTypeID":3,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 2","ProductName":"Chem1","ProductDose":6,"ProductUnit":"l","DoseLog":true},
+    {"TreatmentID":5,"TrialGroupID":8,"TreatmentTypeID":3,"TreatmentDate":"2018-05-03","TreatmentStage":"11-13","Comment":"Trial group 2","ProductName":"Chem1","ProductDose":8,"ProductUnit":"l","DoseLog":true}
+]

@@ -368,8 +368,9 @@ body {
   border-top: 1px solid #D3EFD8;
 }
 
-.trialCell a {
+#similarTrialGroups a {
   text-decoration: none;
+  color:#D3EFD8;
 }
 
 .chemGroup {

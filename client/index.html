@@ -1,149 +1,17 @@
-<html>
+<html ng-app="mainApp">
 
 <head>
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.js"></script>
+  <script src="js/app.js"></script>
 </head>
 
-<body>
-  <div class="mainWrapper">
-    <div class="header">
-      <div id="headerLogout">
-        <span>user@email.com</span> <br />
-        <span><a href="../login.html">Logout</a></span>
-      </div>
-    </div>
-    <div id="headerLogo">
-      <img src="img/header-logo.png" alt="logo" />
-    </div>
-    <div class="searchArea">
-      <span>Home</span>
-      <div id="searchTable">
-        <table>
-          <form action="#">
-            <tr id="searchInputLabels">
-              <td><span>Trial Type</span></td>
-              <td><span>Crop</span></td>
-              <td><span>Year</span></td>
-            </tr>
-            <tr id="searchInputs">
-              <td>
-                <select>
-                      <option value="" disabled selected>Select</option>
-                      <option value="Weed">Weed</option>
-                      <option value="Variety">Variety</option>
-                      <option value="Fungi">Fungi</option>
-                      <option value="Yield">Yield</option>
-                    </select>
-              </td>
-              <td>
-                <select>
-                      <option value="" disabled selected>Select</option>
-                      <option value="Weed1">Weed1</option>
-                      <option value="Weed2">Weed2</option>
-                      <option value="Weed3">Weed3</option>
-                      <option value="Weed4">Weed4</option>
-                    </select>
-              </td>
-              <td>
-                <select>
-                      <option value="" disabled selected>Select</option>
-                      <option value="2018">2018</option>
-                      <option value="2017">2017</option>
-                      <option value="2016">2016</option>
-                      <option value="2015">2015</option>
-                    </select>
-              </td>
-              <td><button>Search</button></td>
-            </tr>
-          </form>
-        </table>
-      </div>
-      <div class="separator">
-        <div class="separatorLine separatorLineFirst">
-          <hr>
-        </div>
-        <div id="separatorCircle">
-          <span class="fa fa-dot-circle"></span>
-        </div>
-        <div class="separatorLine separatorLineLast">
-          <hr>
-        </div>
-      </div>
-    </div>
-    <div class="mainContent">
-      <div class="mainContentHeader yearsHeader">
-        <span>TOP RESULTS</span>
-      </div>
-      <div class="contentGrid">
-        <a href="#">
-          <div class="contentBlock">
-            <img src="img/graphWeed.png" alt="year" />
-            <div class="fadeBackground"></div>
-            <span>WEED</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock">
-            <img src="img/graphVariety.png" alt="year" />
-            <div class="fadeBackground"></div>
-            <span>VARIETY</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock">
-            <img src="img/graphFungi.png" alt="year" />
-            <div class="fadeBackground"></div>
-            <span>FUNGI</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock">
-            <img src="img/graphYield.png" alt="year" />
-            <div class="fadeBackground"></div>
-            <span>YIELD</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock">
-            <img src="img/graphWeed.png" alt="year" />
-            <div class="fadeBackground"></div>
-            <span>TYPE</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock">
-            <img src="img/graphWeed.png" alt="year" />
-            <div class="fadeBackground"></div>
-            <span>TYPE</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock">
-            <img src="img/graphWeed.png" alt="year" />
-            <div class="fadeBackground"></div>
-            <span>TYPE</span>
-          </div>
-        </a>
-        <a href="#">
-          <div class="contentBlock">
-            <img src="img/graphWeed.png" alt="year" />
-            <div class="fadeBackground"></div>
-            <span>TYPE</span>
-          </div>
-        </a>
-      </div>
-    </div>
-    <div class="footer">
-      <div id="footerTxt">
-        <span>This website was developed by David Alves &amp; Elitsa Marinovska</span>
-      </div>
-      <div id="footerLogo">
-        <a href="http://patriotisk.dk"><img src="img/footer-logo.png" alt="logo"/></a>
-      </div>
-    </div>
-  </div>
+<body ng-controller="mainController" ng-view>
+
 </body>
 
 </html>

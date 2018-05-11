@@ -9,8 +9,7 @@
       <img src="img/header-logo.png" alt="logo" />
     </div>
     <div class="searchArea">
-      <span><a href="/client">Home</a><div class ="fa fa-seedling" id="seedling"></div>{{trialTypeLink}}<div class ="fa fa-seedling" id="seedling"></div>{{cropLink}}<div class ="fa fa-seedling" id="seedling"></div>
-        {{yearLink}}<div class ="fa fa-seedling" id="seedling"></div>Chemicals</span>
+      <span>Home</span>
       <div id="searchTable">
         <table>
           <form action="#">
@@ -21,23 +20,21 @@
             </tr>
             <tr id="searchInputs">
                 <td>
-                  <select ng-model="$root.selectedTrialType" ng-options="trialType.TrialTypeName for trialType in trialTypes" ng-change="trialTypeChange()">
-                    <option value="" disabled selected>Select</option>
-                  </select>
+                    <select ng-model="$root.selectedTrialType" ng-options="trialType.TrialTypeName for trialType in trialTypes" ng-change="trialTypeChange()">
+                        <option value="" disabled selected>Select</option>
+                      </select>
                 </td>
                 <td>
-                  <select ng-model="$root.selectedCrop" ng-options="crop.CropName for crop in crops" ng-change="cropChange()">
-                    <option value="" disabled selected>Select</option>
-                  </select>
+                    <select ng-model="$root.selectedCrop" ng-options="crop.CropName for crop in crops" ng-change="cropChange()">
+                        <option value="" disabled selected>Select</option>
+                      </select>
                 </td>
                 <td>
-                  <select ng-model="$root.selectedYear" ng-options="crop.Year for crop in years | unique: 'Year'" ng-change="yearChange()">
-                    <option value="" disabled selected>Select</option>
-                  </select>
+                    <select ng-model="$root.selectedYear" ng-options="crop.Year for crop in years | unique: 'Year'"  ng-change="yearChange()">
+                        <option value="" disabled selected>Select</option>
+                      </select>
                 </td>
-                <td>
-                  <button ng-click="search()">Search</button>
-                </td>
+              <td><button ng-click="search()">Search</button></td>
             </tr>
           </form>
         </table>
@@ -56,14 +53,14 @@
     </div>
     <div class="mainContent">
       <div class="mainContentHeader yearsHeader">
-        <span>CHEMICALS</span>
+        <span>TOP RESULTS</span>
       </div>
       <div class="contentGrid">
-        <a ng-repeat="chemical in chemicals" href="#!/trialGroup/{{chemical.trialGroupID}}">
-          <div class="contentBlock chemicalContentBlock">
-            <div class="fa fa-vial"></div>
-            <div class="fadeBackground white"></div>
-            <span>{{chemical.chemName}}</span>
+        <a ng-repeat="topResult in topResults" href="#!/trialGroup/{{topResult.TopTrial}}">
+          <div class="contentBlock" >
+            <img src="img/graphWeed.png" alt="year" />
+            <div class="fadeBackground"></div>
+            <span>{{topResult.Type | uppercase}}</span>
           </div>
         </a>
       </div>

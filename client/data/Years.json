@@ -1,0 +1,23 @@
+[{"Year":2018, "CropID":1, "TrialGroupID":1}, 
+    {"Year":2018, "CropID":1, "TrialGroupID":8}, 
+    {"Year":2018, "CropID":2, "TrialGroupID":2}, 
+    {"Year":2018, "CropID":4, "TrialGroupID":3}, 
+    {"Year":2018, "CropID":7, "TrialGroupID":4}, 
+    {"Year":2018, "CropID":11, "TrialGroupID":5}, 
+    
+    {"Year":2017, "CropID":3, "TrialGroupID":6}, 
+    {"Year":2017, "CropID":10, "TrialGroupID":7}, 
+    
+    {"Year":2016, "CropID":1, "TrialGroupID":8}, 
+    {"Year":2016, "CropID":5, "TrialGroupID":9}, 
+    {"Year":2016, "CropID":6, "TrialGroupID":10}, 
+    {"Year":2016, "CropID":10, "TrialGroupID":11}, 
+    {"Year":2016, "CropID":11, "TrialGroupID":12}, 
+
+    {"Year":2015, "CropID":4, "TrialGroupID":13}, 
+    {"Year":2015, "CropID":7, "TrialGroupID":14}, 
+    {"Year":2015, "CropID":8, "TrialGroupID":15}, 
+    {"Year":2015, "CropID":9, "TrialGroupID":16}, 
+    {"Year":2015, "CropID":10, "TrialGroupID":17},
+    
+    {"Year":2014, "CropID":8, "TrialGroupID":18}]

@@ -222,7 +222,7 @@ app.controller('blockController', function ($scope, $routeParams, $http, $rootSc
 
 
     if ($rootScope.SubBlocks == undefined) {
-        $rootScope.LoadSubBlocks();
+        promises.push($rootScope.LoadSubBlocks());
     }
 
     if ($rootScope.FieldBlocks == undefined) {
@@ -548,3 +548,7 @@ app.controller('addTrialGroupController', function ($scope, $rootScope, $http) {
         window.location.href = "#!/addSubBlock/";
     }
 });
+
+function editToggle(){
+        $('.addBtn').toggle();
+}

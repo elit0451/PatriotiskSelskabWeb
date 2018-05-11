@@ -60,10 +60,10 @@
     </div>
     <div class="mainContent">
       <div class="mainContentHeader yearsHeader">
-        <span>YEARS<a href="#"><div class="fa fa-edit"></div></a></span>
+        <span>YEARS<a onclick="editToggle();"><div class="fa fa-edit"></div></a></span>
       </div>
       <div class="contentGrid">
-        <a href="#!/addYear/{{FieldBlocks[0].FieldBlockYear + 1}}">
+        <a class="addBtn" href="#!/addYear/{{FieldBlocks[0].FieldBlockYear + 1}}" style="display: none">
           <div class="contentBlock">
             <img src="img/yearBlock.png" alt="year" />
             <img id="plusImg" src="img/plus.png" alt="add" />

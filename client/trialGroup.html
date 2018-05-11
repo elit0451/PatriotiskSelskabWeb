@@ -1,464 +1,185 @@
-<head>
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-</head>
-
-<body>
-  <div class="mainWrapper">
-    <div class="header">
-      <div id="headerLogout">
-        <span>user@email.com</span> <br />
-        <span><a href="../login.html">Logout</a></span>
-      </div>
+<div class="mainWrapper">
+  <div class="header">
+    <div id="headerLogout">
+      <span>user@email.com</span>
+      <br />
+      <span>
+        <a href="../login.html">Logout</a>
+      </span>
     </div>
-    <div id="headerLogo">
-      <img src="img/header-logo.png" alt="logo" />
+  </div>
+  <div id="headerLogo">
+    <img src="img/header-logo.png" alt="logo" />
+  </div>
+  <div class="searchArea">
+    <span>
+      <a href="/client">Home</a>
+      <div class="fa fa-seedling" id="seedling"></div>Top Results
+      <div class="fa fa-seedling" id="seedling"></div>{{trialGroup.TrialTypeName}}</span>
+    <div id="searchTable">
+      <table>
+        <form action="#">
+          <tr id="searchInputLabels">
+            <td>
+              <span>Trial Type</span>
+            </td>
+            <td>
+              <span>Crop</span>
+            </td>
+            <td>
+              <span>Year</span>
+            </td>
+          </tr>
+          <tr id="searchInputs">
+            <td>
+              <select ng-model="$root.selectedTrialType" ng-options="trialType.TrialTypeName for trialType in trialTypes" ng-change="trialTypeChange()">
+                <option value="" disabled selected>Select</option>
+              </select>
+            </td>
+            <td>
+              <select ng-model="$root.selectedCrop" ng-options="crop.CropName for crop in crops" ng-change="cropChange()">
+                <option value="" disabled selected>Select</option>
+              </select>
+            </td>
+            <td>
+              <select ng-model="$root.selectedYear" ng-options="crop.Year for crop in years | unique: 'Year'" ng-change="yearChange()">
+                <option value="" disabled selected>Select</option>
+              </select>
+            </td>
+            <td>
+              <button ng-click="search()">Search</button>
+            </td>
+          </tr>
+        </form>
+      </table>
     </div>
-    <div class="searchArea">
-      <span><a href="index.html">Home</a><div class ="fa fa-seedling" id="seedling"></div><a href="#">Weed</a><div class ="fa fa-seedling" id="seedling"></div><a href="#">Weed 2</a><div class ="fa fa-seedling" id="seedling"></div>
-        2018</span>
-      <div id="searchTable">
-        <table>
-          <form action="#">
-            <tr id="searchInputLabels">
-              <td><span>Trial Type</span></td>
-              <td><span>Crop</span></td>
-              <td><span>Year</span></td>
-            </tr>
-            <tr id="searchInputs">
-              <td>
-                <select>
-                      <option value="" disabled selected>Select</option>
-                      <option value="Weed">Weed</option>
-                      <option value="Variety">Variety</option>
-                      <option value="Fungi">Fungi</option>
-                      <option value="Yield">Yield</option>
-                    </select>
-              </td>
-              <td>
-                <select>
-                      <option value="" disabled selected>Select</option>
-                      <option value="Weed1">Weed1</option>
-                      <option value="Weed2">Weed2</option>
-                      <option value="Weed3">Weed3</option>
-                      <option value="Weed4">Weed4</option>
-                    </select>
-              </td>
-              <td>
-                <select>
-                      <option value="" disabled selected>Select</option>
-                      <option value="2018">2018</option>
-                      <option value="2017">2017</option>
-                      <option value="2016">2016</option>
-                      <option value="2015">2015</option>
-                    </select>
-              </td>
-              <td><button>Search</button></td>
-            </tr>
-          </form>
-        </table>
+    <div class="separator">
+      <div class="separatorLine separatorLineFirst">
+        <hr>
       </div>
-      <div class="separator">
-        <div class="separatorLine separatorLineFirst">
-          <hr>
-        </div>
-        <div id="separatorCircle">
-          <span class="fa fa-dot-circle"></span>
-        </div>
-        <div class="separatorLine separatorLineLast">
-          <hr>
-        </div>
+      <div id="separatorCircle">
+        <span class="fa fa-dot-circle"></span>
       </div>
-    </div>
-    <div class="mainContent">
-      <div class="contentGrid blockGrid">
-        <div class="detailInfo">
-          <div id="detailHeader">
-            <span>Trial Group 2</span>
-          </div>
-          <div id="detailContent">
-            <span class="detailBold">CROP</span>
-            <span class="pull-right">Weed 2</span><br />
-            <hr />
-            <span class="detailBold">COMMENT</span><br /><br />
-            <span>This is Trial Group 2. <br /> Trial 1 has 3 treatments - stage 10, 16, 18.</span><br />
-            <hr />
-            <br /><br />
-            <span class="detailBoldHeader">TREATMENT</span><br />
-            <span class="detailBold">STAGE 10-12</span>
-            <span class="pull-right">20-12-2018</span><br />
-            <span class="detailBoldSmall">CHEMICAL 2</span>
-            <span class="pull-right detailSmall">0.2 ml</span><br />
-            <span class="detailBoldSmall">CHEMICAL 3</span>
-            <span class="pull-right detailSmall">1.45 ml</span><br />
-            <span class="detailBoldSmall">CHEMICAL 4</span>
-            <span class="pull-right detailSmall">2.88 ml</span><br /><br />
-            <span class="detailBoldSmaller">COMMENT</span><br />
-            <span class="detailSmaller">This is treatment at stage 10 to 12.</span><br />
-            <hr />
-            <span class="detailBold">STAGE 16-18</span>
-            <span class="pull-right">N/A</span><br />
-            <span class="detailBoldSmall">CHEMICAL 5</span>
-            <span class="pull-right detailSmall">0.75 ml</span><br />
-            <span class="detailBoldSmall">CHEMICAL 6</span>
-            <span class="pull-right detailSmall">0.25 ml</span><br /><br />
-            <span class="detailBoldSmaller">COMMENT</span><br />
-            <span class="detailSmaller">This is treatment at stage 16 to 18.</span><br />
-            <hr />
-          </div>
-          <div id="detailFooter"></div>
-        </div>
-        <div class="gridLine"></div>
-        <div class="detailGridContent">
-          <div class="chemGroup">
-            <div class="trialCell">
-              <span class="chemTxt">Chemical 2</span>
-              <hr />
-              <span class="chemTxtSmall">1 ml</span>
-            </div>
-            <div class="trialCell">
-              <span class="chemTxt">Chemical 2</span>
-              <hr />
-              <span class="chemTxtSmall">0.5 ml</span>
-            </div>
-            <div class="trialCell">
-              <span class="chemTxt">Chemical 2</span>
-              <hr />
-              <span class="chemTxtSmall">0.25 ml</span>
-            </div>
-            <div class="trialCell">
-              <span class="chemTxt">Chemical 2</span>
-              <hr />
-              <span class="chemTxtSmall">0.125 ml</span>
-            </div>
-            <div class="trialCell">
-              <span class="chemTxt">Chemical 2</span>
-              <hr />
-              <span class="chemTxtSmall">0 ml</span>
-            </div>
-          </div>
-          <div class="graph">
-            <img src="img/trialGroupGraph1.png" alt="graph" />
-          </div>
-          <div class="graph">
-            <img src="img/trialGroupGraph2.png" alt="graph" />
-          </div>
-        </div>
-      </div>
-      <div class="separatorSecondary">
-        <div class="separatorLine separatorLineFirst">
-          <hr>
-        </div>
-        <div id="separatorCircle">
-          <span class="fa fa-dot-circle"></span>
-        </div>
-        <div class="separatorLine separatorLineLast">
-          <hr>
-        </div>
-      </div>
-      <div class="similarContent">
-        <span>SIMILAR TRIAL GROUPS</span>
-        <div id="similarTrialGroups">
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 2</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 5</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 4</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 8</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 3</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 3</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 4</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 11</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 1</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 5</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 3</span>
-            </div>
-          </div>
-          <div class="trialCell">
-            <div>
-              <span class="chemTxt">Chemical 1</span>
-              <hr />
-              <span class="chemTxtSmall">WEED 2</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="footer">
-      <div id="footerTxt">
-        <span>This website was developed by David Alves &amp; Elitsa Marinovska</span>
-      </div>
-      <div id="footerLogo">
-        <a href="http://patriotisk.dk"><img src="img/footer-logo.png" alt="logo"/></a>
+      <div class="separatorLine separatorLineLast">
+        <hr>
       </div>
     </div>
   </div>
-</body>
-
-</html>
+  <div class="mainContent">
+    <div class="contentGrid blockGrid">
+      <div class="detailInfo">
+        <div id="detailHeader">
+          <span>Trial Group {{trialGroup.TrialGroupNr}}</span>
+        </div>
+        <div id="detailContent">
+          <span class="detailBold">CROP</span>
+          <span class="pull-right">{{trialGroup.CropName}}</span>
+          <br />
+          <hr />
+          <span class="detailBold">COMMENT</span>
+          <br />
+          <br />
+          <span>{{trialGroup.Comment}}</span>
+          <br />
+          <hr />
+          <br />
+          <br />
+          <span class="detailBoldHeader">TREATMENT</span>
+          <br />
+          <div ng-repeat="stage in Stages">
+            <span class="detailBold">STAGE {{stage.stageName}}</span>
+            <span class="pull-right">{{stage.stageDate}}
+              <span ng-if="stage.stageDate == undefined">N/A</span>
+            </span>
+            <br />
+            <div ng-repeat="product in stage.products">
+              <span class="detailBoldSmall">{{product.productName}}</span>
+              <span class="pull-right detailSmall">{{product.dosage}}
+                <span ng-if="product.dosage != 'LOG'"> ml</span>
+              </span>
+              <br />
+            </div>
+            <br />
+            <span class="detailBoldSmaller">COMMENT</span>
+            <br />
+            <span class="detailSmaller">{{stage.stageComment}}</span>
+            <br />
+            <hr />
+          </div>
+        </div>
+        <div id="detailFooter"></div>
+      </div>
+      <div class="gridLine"></div>
+      <div class="detailGridContent">
+        <div class="chemGroup">
+          <div class="trialCell" ng-if="trialGroup.LogChemDosages[0] != undefined">
+            <span class="chemTxt">{{trialGroup.LogChemName}}</span>
+            <hr />
+            <span class="chemTxtSmall">{{trialGroup.LogChemDosages[0]}} ml</span>
+          </div>
+          <div class="trialCell" ng-if="trialGroup.LogChemDosages[1] != undefined">
+            <span class="chemTxt">{{trialGroup.LogChemName}}</span>
+            <hr />
+            <span class="chemTxtSmall">{{trialGroup.LogChemDosages[1]}} ml</span>
+          </div>
+          <div class="trialCell" ng-if="trialGroup.LogChemDosages[2] != undefined">
+            <span class="chemTxt">{{trialGroup.LogChemName}}</span>
+            <hr />
+            <span class="chemTxtSmall">{{trialGroup.LogChemDosages[2]}} ml</span>
+          </div>
+          <div class="trialCell" ng-if="trialGroup.LogChemDosages[3] != undefined">
+            <span class="chemTxt">{{trialGroup.LogChemName}}</span>
+            <hr />
+            <span class="chemTxtSmall">{{trialGroup.LogChemDosages[3]}} ml</span>
+          </div>
+          <div class="trialCell" ng-if="trialGroup.LogChemDosages[4] != undefined">
+            <span class="chemTxt">{{trialGroup.LogChemName}}</span>
+            <hr />
+            <span class="chemTxtSmall">{{trialGroup.LogChemDosages[4]}} ml</span>
+          </div>
+        </div>
+        <div class="graph">
+          <img src="img/trialGroupGraph1.png" alt="graph" />
+        </div>
+        <div class="graph">
+          <img src="img/trialGroupGraph2.png" alt="graph" />
+        </div>
+      </div>
+    </div>
+    <div class="separatorSecondary">
+      <div class="separatorLine separatorLineFirst">
+        <hr>
+      </div>
+      <div id="separatorCircle">
+        <span class="fa fa-dot-circle"></span>
+      </div>
+      <div class="separatorLine separatorLineLast">
+        <hr>
+      </div>
+    </div>
+    <div class="similarContent">
+      <span>SIMILAR TRIAL GROUPS</span>
+      <div id="similarTrialGroups">
+      <a href="#!/trialGroup/{{similarTrialGroup.trialID}}" ng-repeat="similarTrialGroup in SimilarTrialGroups">
+        <div class="trialCell">
+            <div>
+              <span class="chemTxt">{{similarTrialGroup.chemName}}</span>
+              <hr />
+              <span class="chemTxtSmall">{{similarTrialGroup.cropName | uppercase}}</span>
+            </div>
+        </div>
+      </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div id="footerTxt">
+      <span>This website was developed by David Alves &amp; Elitsa Marinovska</span>
+    </div>
+    <div id="footerLogo">
+      <a href="http://patriotisk.dk">
+        <img src="img/footer-logo.png" alt="logo" />
+      </a>
+    </div>
+  </div>
+</div>
