@@ -16,7 +16,7 @@
       <div class="contentGrid blockGrid">
         <div class="detailInfo">
           <div id="detailHeader">
-            <span>Sub-block {{selectedSubBlockChar}}<a onclick="editToggle();"><div class="fa fa-edit"></div></a></span>
+            <span>Sub-block {{selectedSubBlockChar}}<a ng-click="editSubBlockInfo();"><div class="fa fa-edit"></div></a></span>
           </div>
           <div id="detailContent">
             <span class="detailBold">LENGTH</span>
@@ -30,7 +30,6 @@
             <hr />
             <span class="detailBold">COMMENT</span><br /><br />
             <span>{{SubBlock.Comment}}</span><br />
-            <button ng-click="addSubBlock()">Add Sub-Block</button>
             <hr />
           </div>
           <div id="detailFooter"></div>
