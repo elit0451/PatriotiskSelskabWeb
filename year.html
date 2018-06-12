@@ -23,11 +23,11 @@
             <img id="plusImg" src="img/greenPlus.png" alt="add" />
           </div>
         </a>
-        <div ng-repeat="fieldBlock in FieldBlocks" ng-if="fieldBlock.FieldBlockYear == selectedFieldBlockYear">
+        <div ng-repeat="fieldBlock in FieldBlocks">
         <a href="#!/block/{{fieldBlock.FieldBlockID}}">
           <div class="contentBlock blockBlock">
-            <div ng-repeat="subBlock in SubBlocks">
-            <div ng-if="subBlock.FieldBlockID == fieldBlock.FieldBlockID" class="subBlockBlock" style="width: calc({{subBlock.SubBlockWidth * 100 / fieldBlock.FieldBlockWidth}}% - 3px); height: calc({{subBlock.SubBlockLength * 100 / fieldBlock.FieldBlockLength}}% - 3px); top: {{subBlock.PosL* 100 / fieldBlock.FieldBlockLength}}% ; left: {{subBlock.PosW * 100 / fieldBlock.FieldBlockWidth}}%;"></div>
+            <div ng-repeat="subBlock in fieldBlock.SubBlocks">
+            <div class="subBlockBlock" style="width: calc({{subBlock.SubBlockWidth * 100 / fieldBlock.FieldBlockWidth}}% - 3px); height: calc({{subBlock.SubBlockLength * 100 / fieldBlock.FieldBlockLength}}% - 3px); top: {{subBlock.PosL* 100 / fieldBlock.FieldBlockLength}}% ; left: {{subBlock.PosW * 100 / fieldBlock.FieldBlockWidth}}%;"></div>
             </div>
             <span>{{fieldBlock.BlockChar}}</span>
           </div>

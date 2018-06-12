@@ -20,17 +20,17 @@
             </tr>
             <tr id="searchInputs">
                 <td>
-                    <select ng-model="$root.selectedTrialType" ng-options="trialType.TrialTypeName for trialType in trialTypes" ng-change="trialTypeChange()">
+                    <select ng-model="$root.selectedTrialType" ng-options="trialType.Name for trialType in trialTypes" ng-change="trialTypeChange()">
                         <option value="" disabled selected>Select</option>
                       </select>
                 </td>
                 <td>
-                    <select ng-model="$root.selectedCrop" ng-options="crop.CropName for crop in crops" ng-change="cropChange()">
+                    <select ng-model="$root.selectedCrop" ng-options="crop.Name for crop in crops" ng-change="cropChange()">
                         <option value="" disabled selected>Select</option>
                       </select>
                 </td>
                 <td>
-                    <select ng-model="$root.selectedYear" ng-options="crop.Year for crop in years | unique: 'Year'"  ng-change="yearChange()">
+                    <select ng-model="$root.selectedYear" ng-options="x for x in years"  ng-change="yearChange()">
                         <option value="" disabled selected>Select</option>
                       </select>
                 </td>

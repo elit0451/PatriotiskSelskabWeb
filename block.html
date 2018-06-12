@@ -45,7 +45,7 @@
           </div>
           <div class="gridLine"></div>
           <div class="detailGridContent">
-            <div ng-repeat="subBlock in SubBlocks" ng-if="subBlock.FieldBlockID == FieldBlock.FieldBlockID">
+            <div ng-repeat="subBlock in SubBlocks">
               <a href="#!/subBlock/{{subBlock.SubBlockID}}"><div class="subBlockBlock" style="width: calc({{subBlock.SubBlockWidth * 100 / FieldBlock.FieldBlockWidth}}% - 10px); height: calc({{subBlock.SubBlockLength * 100 / FieldBlock.FieldBlockLength}}% - 10px); top: {{subBlock.PosL* 100 / FieldBlock.FieldBlockLength}}% ; left: {{subBlock.PosW * 100 / FieldBlock.FieldBlockWidth}}%;">
               <span>{{subBlock.SubBlockChar}}</span>
               </div></a>

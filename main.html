@@ -63,17 +63,17 @@
         <span>YEARS<a onclick="editToggle();"><div class="fa fa-edit"></div></a></span>
       </div>
       <div class="contentGrid">
-        <a class="addBtn" href="#!/addYear/{{FieldBlocks[0].FieldBlockYear + 1}}" style="display: none">
+        <a class="addBtn" href="#!/addYear/{{years[0] + 1}}" style="display: none">
           <div class="contentBlock">
             <img src="img/yearBlock.png" alt="year" />
             <img id="plusImg" src="img/plus.png" alt="add" />
           </div>
         </a>
-        <div ng-repeat="fieldBlock in FieldBlocks | unique: 'FieldBlockYear' | orderBy: '-FieldBlockYear'">
-          <a href="#!/year/{{fieldBlock.FieldBlockYear}}" >
+        <div ng-repeat="year in years">
+          <a href="#!/year/{{year}}" >
           <div class="contentBlock">
             <img src="img/yearBlock.png" alt="year" />
-            <span>{{ fieldBlock.FieldBlockYear }}</span>
+            <span>{{ year }}</span>
           </div>
         </a>
       </div>

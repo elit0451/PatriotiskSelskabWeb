@@ -76,52 +76,98 @@ app.run(['$rootScope', '$http', function ($rootScope, $http) {
 
     $rootScope.GetSubBlock = function (trialGroup) {
         var SubBlock;
-        $http.get("data/SubBlocks.json")
+        $http.get("http://localhost:50458/GetTrialGroupSubBlock/" + trialGroup.TrialGroupID)
             .then(function (response) {
-                angular.forEach(response.data, function (value, key) {
-                    if (trialGroup.SubBlockID == value.SubBlockID) {
-                        $rootScope.selectedSubBlockChar = value.SubBlockChar;
-                        $rootScope.selectedSubBlockID = value.SubBlockID;
-                        SubBlock = value;
-                    }
-                });
+                console.log(SubBlock);
+                SubBlock = response.data;
+                $rootScope.selectedSubBlockChar = SubBlock.SubBlockChar;
+                $rootScope.selectedSubBlockID = SubBlock.SubBlockID;
                 $rootScope.GetBlock(SubBlock);
             });
     };
 
     $rootScope.GetBlock = function (subBlock) {
-        $http.get("data/FieldBlocks.json")
+        $http.get("http://localhost:50458/GetSubBlockFieldBlock/" + subBlock.SubBlockID)
             .then(function (response) {
-                angular.forEach(response.data, function (value, key) {
-                    if (subBlock.FieldBlockID == value.FieldBlockID) {
-                        $rootScope.selectedFieldBlockChar = value.BlockChar;
-                        $rootScope.selectedFieldBlockID = value.FieldBlockID;
-                        $rootScope.selectedFieldBlockYear = value.FieldBlockYear;
-                    }
-                });
+                $rootScope.selectedFieldBlockChar = response.data.BlockChar;
+                $rootScope.selectedFieldBlockID = response.data.FieldBlockID;
+                $rootScope.selectedFieldBlockYear = response.data.FieldBlockYear;
             });
     };
 
-    $rootScope.LoadSubBlocks = function () {
-        return $http.get("data/SubBlocks.json")
+    $rootScope.LoadFieldBlock = function (fieldblockid) {
+        return $http.get("http://localhost:50458/GetFieldBlock/" + fieldblockid)
+            .then(function (response) {
+                $rootScope.FieldBlock = response.data;
+            });
+    };
+
+    $rootScope.LoadSubBlocks = function (fieldblockid) {
+        return $http.get("http://localhost:50458/GetSubBlocks/" + fieldblockid)
             .then(function (response) {
                 $rootScope.SubBlocks = response.data;
             });
     };
 
-    $rootScope.LoadTrialGroups = function () {
-        return $http.get("data/TrialGroups.json")
+    $rootScope.LoadSubBlock = function (subblockid) {
+        return $http.get("http://localhost:50458/GetSubBlock/" + subblockid)
             .then(function (response) {
-                $rootScope.TrialGroups = response.data;
+                $rootScope.SubBlock = response.data;
             });
     };
 
-    $rootScope.LoadTreatments = function () {
-        return $http.get("data/Treatment.json")
+    $rootScope.LoadTrialGroupsAndTreatments = function (subblockid) {
+        return $http.get("http://localhost:50458/GetTrialGroups/" + subblockid)
             .then(function (response) {
-                $rootScope.Treatments = response.data;
+                $rootScope.TrialGroups = response.data;
+                angular.forEach($rootScope.TrialGroups, function (value, key) {
+                    value.Treatment = [];
+                    value.LogChemName = "";
+                    value.LogChemDosages = [];
+                    $http.get("http://localhost:50458/GetTrialGroupTreatments/" + value.TrialGroupID)
+                        .then(function (response) {
+                            var treatments = response.data;
+                            angular.forEach(treatments, function (treatmentValue, treatmentKey) {
+                                value.Treatment.push(treatmentValue);
+                                if (treatmentValue.DoseLog === true) {
+                                    value.LogChemName = treatmentValue.ProductName;
+                                    value.LogChemDosages.push(treatmentValue.ProductDose);
+                                }
+                                value.LogChemDosages = value.LogChemDosages.sort().reverse();
+                            });
+                        });
+                });
+                console.log($rootScope.TrialGroups);
             });
     };
+
+    $rootScope.LoadTrialGroup = function (trialgroupid) {
+        return $http.get("http://localhost:50458/GetTrialGroup/" + trialgroupid)
+            .then(function (response) {
+                console.log("Started gathering trialgroup");
+                $rootScope.TrialGroup = response.data;
+                $rootScope.TrialGroup.Treatments = [];
+                $rootScope.TrialGroup.LogChemName = "";
+                $rootScope.TrialGroup.LogChemDosages = [];
+            });
+    };
+
+    $rootScope.LoadTrialGroupTreatments = function (trialgroupid) {
+        return $http.get("http://localhost:50458/GetTrialGroupTreatments/" + trialgroupid)
+            .then(function (response) {
+                var treatments = response.data;
+                angular.forEach(treatments, function (treatmentValue, treatmentKey) {
+                    $rootScope.TrialGroup.Treatments.push(treatmentValue);
+                    console.log(treatmentValue);
+                    if (treatmentValue.DoseLog === true) {
+                        $rootScope.TrialGroup.LogChemName = treatmentValue.ProductName;
+                        $rootScope.TrialGroup.LogChemDosages.push(treatmentValue.ProductDose);
+                    }
+                    $rootScope.TrialGroup.LogChemDosages = $rootScope.TrialGroup.LogChemDosages.sort().reverse();
+                });
+            });
+    }
+
 }]);
 
 app.controller('mainController', function ($rootScope, $scope, $http) {
@@ -130,17 +176,9 @@ app.controller('mainController', function ($rootScope, $scope, $http) {
     $scope.subBlocks = [];
     $scope.trialGroups = [];
 
-    $http.get("data/FieldBlocks.json")
+    $http.get("http://localhost:50458/GetYears")
         .then(function (response) {
-            $rootScope.FieldBlocks = response.data.sort(function (a, b) { return (a.FieldBlockYear < b.FieldBlockYear) ? 1 : ((b.FieldBlockYear < a.FieldBlockYear) ? -1 : 0); });;
-
-            angular.forEach($rootScope.FieldBlocks, function (value, key) {
-                var found = $scope.years.some(function (el) {
-                    return el === value.FieldBlockYear;
-                });
-
-                if (!found) $scope.years.push(value.FieldBlockYear);
-            });
+            $scope.years = response.data;
 
             $scope.years = $scope.years.sort().reverse();
         });
@@ -148,36 +186,27 @@ app.controller('mainController', function ($rootScope, $scope, $http) {
     $scope.yearChange = function () {
         $scope.blocks = [];
 
-        angular.forEach($rootScope.FieldBlocks, function (value, key) {
-            if ($scope.selectedYear == value.FieldBlockYear) {
-                $scope.blocks.push(value);
-            }
-        });
+        $http.get("http://localhost:50458/GetFieldBlocks/" + $scope.selectedYear)
+            .then(function (response) {
+                $scope.blocks = response.data;
+            });
     };
 
     $scope.blockChange = function () {
         $scope.subBlocks = [];
 
-        $http.get("data/SubBlocks.json")
+        $http.get("http://localhost:50458/GetSubBlocks/" + $scope.selectedBlock.FieldBlockID)
             .then(function (response) {
-                angular.forEach(response.data, function (value, key) {
-                    if ($scope.selectedBlock.FieldBlockID == value.FieldBlockID) {
-                        $scope.subBlocks.push(value);
-                    }
-                });
+                $scope.subBlocks = response.data;
             });
     };
 
     $scope.subBlockChange = function () {
         $scope.trialGroups = [];
 
-        $http.get("data/TrialGroups.json")
+        $http.get("http://localhost:50458/GetTrialGroups/" + $scope.selectedSubBlock.SubBlockID)
             .then(function (response) {
-                angular.forEach(response.data, function (value, key) {
-                    if ($scope.selectedSubBlock.SubBlockID == value.SubBlockID) {
-                        $scope.trialGroups.push(value);
-                    }
-                });
+                $scope.trialGroups = response.data;
             });
     };
 
@@ -200,21 +229,23 @@ app.controller('mainController', function ($rootScope, $scope, $http) {
 
 app.controller('yearController', function ($scope, $routeParams, $rootScope, $http) {
     var flag = false;
-    angular.forEach($rootScope.FieldBlocks, function (value, key) {
-        if (value.FieldBlockYear == $routeParams.year) {
-            flag = true;
-        }
-    });
-    if (flag == false) {
-        window.location.href = "/";
-    }
+    $http.get("http://localhost:50458/GetFieldBlocks/" + $routeParams.year)
+        .then(function (response) {
+            $scope.FieldBlocks = response.data;
+            if ($scope.FieldBlocks.length <= 0)
+                window.location.href = "/";
+            $scope.SubBlocks = [];
+
+            angular.forEach($scope.FieldBlocks, function (value, key) {
+                console.log("http://localhost:50458/GetSubBlocks/" + value.FieldBlockID);
+                $http.get("http://localhost:50458/GetSubBlocks/" + value.FieldBlockID)
+                    .then(function (response) {
+                        value.SubBlocks = response.data;
+                    });
+            });
+        });
 
     $rootScope.selectedFieldBlockYear = $routeParams.year;
-    $http.get("data/SubBlocks.json")
-        .then(function (response) {
-            $rootScope.SubBlocks = response.data;
-
-        });
 
     $scope.addBlock = function () {
         $rootScope.addBlock = undefined;
@@ -228,30 +259,15 @@ app.controller('yearController', function ($scope, $routeParams, $rootScope, $ht
 app.controller('blockController', function ($scope, $routeParams, $http, $rootScope, $q) {
     var promises = [];
 
-    if ($rootScope.SubBlocks == undefined) {
-        promises.push($rootScope.LoadSubBlocks());
-    }
-
-    if ($rootScope.FieldBlocks == undefined) {
-        promises.push($rootScope.LoadFieldBlocks());
-    }
+    promises.push($rootScope.LoadFieldBlock($routeParams.blockID));
+    promises.push($rootScope.LoadSubBlocks($routeParams.blockID));
 
     $q.all(promises).then(function () {
-        var flag = false;
-
-        angular.forEach($rootScope.FieldBlocks, function (value, key) {
-            if (value.FieldBlockID == $routeParams.blockID) {
-                flag = true;
-            }
-        });
-        if (flag == false) {
+        if ($rootScope.FieldBlock == undefined) {
             window.location.href = "/";
         }
-        angular.forEach($rootScope.FieldBlocks, function (value, key) {
-            if (value.FieldBlockID == $routeParams.blockID) {
-                $scope.FieldBlock = value;
-            }
-        });
+        $scope.FieldBlock = $rootScope.FieldBlock;
+
         if ($rootScope.selectedFieldBlockYear == undefined) {
             $rootScope.selectedFieldBlockYear = $scope.FieldBlock.FieldBlockYear;
         }
@@ -278,75 +294,31 @@ app.controller('blockController', function ($scope, $routeParams, $http, $rootSc
 });
 
 app.controller('subBlockController', function ($scope, $rootScope, $routeParams, $http, $q) {
-    $scope.TrialGroups = [];
-
     var promises = [];
-    if ($rootScope.SubBlocks == undefined)
-        promises.push($rootScope.LoadSubBlocks());
+    promises.push($rootScope.LoadSubBlock($routeParams.subBlockID));
+    promises.push($rootScope.LoadTrialGroupsAndTreatments($routeParams.subBlockID));
 
-    $http.get("data/TrialGroups.json")
-        .then(function (response) {
-            $rootScope.TrialGroups = response.data;
-            $http.get("data/Treatment.json")
-                .then(function (response) {
-                    $rootScope.Treatments = response.data;
-
-                    angular.forEach($rootScope.TrialGroups, function (value, key) {
-                        if ($routeParams.subBlockID == value.SubBlockID) {
-                            $scope.TrialGroups.push(value);
-                        }
-                    });
-
-                    angular.forEach($scope.TrialGroups, function (value, key) {
-                        value.Treatment = [];
-                        value.LogChemName = "";
-                        value.LogChemDosages = [];
-                        angular.forEach($rootScope.Treatments, function (treatmentValue, treatmentKey) {
-                            if (value.TrialGroupID == treatmentValue.TrialGroupID) {
-                                value.Treatment.push(treatmentValue);
-                                if (treatmentValue.DoseLog === true) {
-                                    value.LogChemName = treatmentValue.ProductName;
-                                    value.LogChemDosages.push(treatmentValue.ProductDose);
-                                }
-                            }
-                            value.LogChemDosages = value.LogChemDosages.sort().reverse();
-                        });
-                    });
-                });
-        });
     $q.all(promises).then(function () {
-        var flag = false;
-        angular.forEach($rootScope.SubBlocks, function (value, key) {
-            if (value.SubBlockID == $routeParams.subBlockID) {
-                flag = true;
-            }
-        });
-        if (flag == false) {
+        if ($rootScope.SubBlock == undefined) {
             window.location.href = "/";
         }
 
-        angular.forEach($rootScope.SubBlocks, function (value, key) {
-            if (value.SubBlockID == $routeParams.subBlockID) {
-                $scope.SubBlock = value;
-            }
-        });
-
         if ($rootScope.selectedFieldBlockChar == undefined)
-            $rootScope.GetBlock($scope.SubBlock);
+            $rootScope.GetBlock($rootScope.SubBlock);
 
-        $rootScope.selectedSubBlockChar = $scope.SubBlock.SubBlockChar;
-        $rootScope.selectedSubBlockID = $scope.SubBlock.SubBlockID;
+        $rootScope.selectedSubBlockChar = $rootScope.SubBlock.SubBlockChar;
+        $rootScope.selectedSubBlockID = $rootScope.SubBlock.SubBlockID;
 
         $scope.editSubBlockInfo = function () {
             $rootScope.addSubBlocks = undefined;
             $rootScope.addYear = $rootScope.selectedFieldBlockYear;
-            angular.forEach($scope.TrialGroups, function(value, key){
-                if($rootScope.addTrialGroups == undefined)
+            angular.forEach($scope.TrialGroups, function (value, key) {
+                if ($rootScope.addTrialGroups == undefined)
                     $rootScope.addTrialGroups = [];
                 $rootScope.addTrialGroups.push({ TrialGroupNr: value.TrialGroupNr, Crop: value.CropName, LogChemName: value.LogChemName, LogChemDosages: value.LogChemDosages, TrialComment: value.Comment, Treatments: value.Treatment })
             });
-            $rootScope.addSubBlock = { subBlockChar: $scope.SubBlock.SubBlockChar, subBlockLength: $scope.SubBlock.SubBlockLength, subBlockWidth: $scope.SubBlock.SubBlockWidth, comment: $scope.SubBlock.Comment, trialGroups: $rootScope.addTrialGroups, PosL:$scope.SubBlock.PosL, PosW: $scope.SubBlock.PosW };
-            
+            $rootScope.addSubBlock = { subBlockChar: $scope.SubBlock.SubBlockChar, subBlockLength: $scope.SubBlock.SubBlockLength, subBlockWidth: $scope.SubBlock.SubBlockWidth, comment: $scope.SubBlock.Comment, trialGroups: $rootScope.addTrialGroups, PosL: $scope.SubBlock.PosL, PosW: $scope.SubBlock.PosW };
+
             window.location.href = "#!/addSubBlock";
         };
     });
@@ -354,70 +326,37 @@ app.controller('subBlockController', function ($scope, $rootScope, $routeParams,
 
 app.controller('trialGroupController', function ($scope, $rootScope, $routeParams, $q) {
     var promises = [];
-    if ($rootScope.TrialGroups == undefined)
-        promises.push($rootScope.LoadTrialGroups());
-    if ($rootScope.Treatments == undefined)
-        promises.push($rootScope.LoadTreatments());
+    promises.push($rootScope.LoadTrialGroup($routeParams.trialGroupID));
+    promises.push($rootScope.LoadTrialGroupTreatments($routeParams.trialGroupID));
+
 
     $scope.Stages = [];
 
     $q.all(promises).then(function () {
-        var flag = false;
-
-        angular.forEach($rootScope.TrialGroups, function (value, key) {
-            if (value.TrialGroupID == $routeParams.trialGroupID) {
-                flag = true;
-            }
-        });
-        if (flag == false) {
+        if ($rootScope.TrialGroup == undefined) {
             window.location.href = "/";
         }
 
-        angular.forEach($rootScope.TrialGroups, function (value, key) {
-            value.Treatments = [];
-            value.LogChemName = "";
-            value.LogChemDosages = [];
-
-            if (value.TrialGroupID == $routeParams.trialGroupID) {
-                $scope.TrialGroup = value;
-
-                angular.forEach($rootScope.Treatments, function (treatmentValue, treatmentKey) {
-                    if (treatmentValue.TrialGroupID == $scope.TrialGroup.TrialGroupID) {
-                        $scope.TrialGroup.Treatments.push(treatmentValue);
-                        if (treatmentValue.DoseLog === true) {
-                            $scope.TrialGroup.LogChemName = treatmentValue.ProductName;
-                            $scope.TrialGroup.LogChemDosages.push(treatmentValue.ProductDose);
-                        }
-                    }
-                    $scope.TrialGroup.LogChemDosages = $scope.TrialGroup.LogChemDosages.sort().reverse();
-                });
-                if ($rootScope.selectedSubBlockChar == undefined) {
-                    $rootScope.GetSubBlock($scope.TrialGroup);
-                }
-            }
-        });
-        angular.forEach($scope.TrialGroup.Treatments, function (value, key) {
-
-            var found = $scope.Stages.some(function (el) {
-                return el.id === value.TreatmentID;
-            });
-
-            if (!found) {
-                $scope.Stages.push({ id: value.TreatmentID, stageName: value.TreatmentStage, stageDate: value.TreatmentDate, stageComment: value.Comment, products: [] });
-            }
+        if ($rootScope.selectedSubBlockChar == undefined) {
+            $rootScope.GetSubBlock($scope.TrialGroup);
+        }
+        angular.forEach($rootScope.TrialGroup.Treatments, function (value, key) {
+            $scope.Stages.push({ id: value.TreatmentID, stageName: value.TreatmentStage, stageDate: value.TreatmentDate, stageComment: value.Comment, products: [] });
 
             angular.forEach($scope.Stages, function (stageValue, stageKey) {
                 if (stageValue.id == value.TreatmentID) {
-                    var dose;
-                    if (value.DoseLog == true) dose = "LOG";
-                    else dose = value.ProductDose;
+                    angular.forEach(value.Products, function (product, productKey) {
+                        var dose;
+                        if (product.DoseLog == true) dose = "LOG";
+                        else dose = product.ProductDose;
 
-                    found = stageValue.products.some(function (el) {
-                        return el.productName === value.ProductName;
+                        found = stageValue.products.some(function (el) {
+                            return el.productName === product.TrtProduct.Name;
+                        });
+
+                        if (!found)
+                            stageValue.products.push({ productName: product.TrtProduct.Name, dosage: dose });
                     });
-
-                    if (!found)
-                        stageValue.products.push({ productName: value.ProductName, dosage: dose });
                 }
             });
 
@@ -429,26 +368,52 @@ app.controller('trialGroupController', function ($scope, $rootScope, $routeParam
         $scope.editTrialGroupInfo = function () {
             $rootScope.addSubBlocks = undefined;
             $rootScope.addYear = $rootScope.selectedFieldBlockYear;
-            angular.forEach($scope.TrialGroups, function(value, key){
-                if($rootScope.addTrialGroups == undefined)
+            angular.forEach($scope.TrialGroups, function (value, key) {
+                if ($rootScope.addTrialGroups == undefined)
                     $rootScope.addTrialGroups = [];
                 $rootScope.addTrialGroups.push({ TrialGroupNr: value.TrialGroupNr, Crop: value.CropName, LogChemName: value.LogChemName, LogChemDosages: value.LogChemDosages, TrialComment: value.Comment, Treatments: value.Treatment })
             });
-            $rootScope.addSubBlock = { subBlockChar: $scope.SubBlock.SubBlockChar, subBlockLength: $scope.SubBlock.SubBlockLength, subBlockWidth: $scope.SubBlock.SubBlockWidth, comment: $scope.SubBlock.Comment, trialGroups: $rootScope.addTrialGroups, PosL:$scope.SubBlock.PosL, PosW: $scope.SubBlock.PosW };
-            
+            $rootScope.addSubBlock = { subBlockChar: $scope.SubBlock.SubBlockChar, subBlockLength: $scope.SubBlock.SubBlockLength, subBlockWidth: $scope.SubBlock.SubBlockWidth, comment: $scope.SubBlock.Comment, trialGroups: $rootScope.addTrialGroups, PosL: $scope.SubBlock.PosL, PosW: $scope.SubBlock.PosW };
+
             window.location.href = "#!/addSubBlock";
         };
     });
 });
 
-app.controller('addYearController', function ($scope, $routeParams, $rootScope) {
+app.controller('addYearController', function ($scope, $routeParams, $rootScope,$http) {
     if ($rootScope.addFieldBlocks == undefined)
         $rootScope.addFieldBlocks = [];
 
     $scope.saveYear = function () {
-        S
         angular.forEach($rootScope.addFieldBlocks, function (value, key) {
             value.fieldBlockYear = $routeParams.year;
+            var newBlock = {FieldBlockID: 0, BlockChar:value.blockChar, FieldBlockYear:value.fieldBlockYear, FieldBlockLength:value.blockLength, FieldBlockWidth:value.blockWidth, Comment:value.comment, SubBlocks:[]};
+            angular.forEach(value.subBlocks, function (subblock, keys) {
+                var newSubBlock = {SubBlockID:0, SubBlockChar:subblock.subBlockChar, AmountOfTrialGroups:16, LastNrOfTrialGroup:16, SubBlockLength:subblock.subBlockLength, SubBlockWidth:subblock.subBlockWidth, PosL:subblock.PosL, PosW:subblock.PosW,Comment:subblock.comment,SubBlockTrialType:{Name:"Weed"},TrialGroups:[]};
+                angular.forEach(subblock.trialGroups, function (trialgroup, keyt) {
+                    var newTrialGroup = {TrialGroupID:0, TrialGroupCrop:{name:trialgroup.Crop}, TrialGroupNr:trialgroup.TrialGroupNr, Comment:trialgroup.TrialComment, Treatments:[]};
+                    angular.forEach(trialgroup.Treatments, function (treatment, keytr) {
+                        var newTreatment = {TreatmentID:0, TreatmentTreatmentType:{Name:"Fertilizing"}, TreatmentDate:treatment.Date, TreatmentStage:treatment.Stage, Comment:treatment.Comment, Products:[]};
+                        angular.forEach(treatment.Products, function (product, keyp) {
+                            var newProduct = {TrtProduct:{Name:product.productName, Owner:"", Category:{Name:""}}, ProductDose:product.productDose, ProductUnit:{Name:product.productUnit}, DoseLog:product.doseLog, Results:null};
+                            newTreatment.Products.push(newProduct);
+                        });
+                        newTrialGroup.Treatments.push(newTreatment);
+                    });
+                    newSubBlock.TrialGroups.push(newTrialGroup);
+                });
+                newBlock.SubBlocks.push(newSubBlock);
+            });
+            console.log("NEWBLOCK");
+            console.log(newBlock);
+            console.log("ENDNEWBLOCK");
+            var res = $http.post('http://localhost:50458/AddFieldBlock/', newBlock);
+		res.success(function(data, status, headers, config) {
+			$scope.message = data;
+		});
+		res.error(function(data, status, headers, config) {
+			alert( "failure message: " + JSON.stringify({data: data}));
+		});
         });
     };
 
@@ -543,13 +508,13 @@ app.controller('addTrialGroupController', function ($scope, $rootScope, $http) {
     $scope.Treatments = [];
     $scope.Products = [];
 
-    $http.get("data/Weeds.json")
+    $http.get("http://localhost:50458/GetAllWeeds")
         .then(function (response) {
             $scope.Weeds = response.data;
         });
 
     $scope.addTreatment = function () {
-        
+
 
         $scope.DisplayProducts = JSON.parse(JSON.stringify($scope.Products));
         $scope.DisplayProducts.push({ productName: $scope.logChemName, productDose: 'LOG', productUnit: 0, doseLog: true });
@@ -598,7 +563,7 @@ app.controller('addTrialGroupController', function ($scope, $rootScope, $http) {
         });
         $scope.LogChemDosages = $scope.LogChemDosages.sort().reverse();
 
-        $rootScope.addTrialGroups.push({ TrialGroupNr: $scope.trialGroupNr, Crop: $scope.selectedWeed.CropName, LogChemName: $scope.LogChemName, LogChemDosages: $scope.LogChemDosages, TrialComment: $scope.comment, Treatments: $scope.Treatments });
+        $rootScope.addTrialGroups.push({ TrialGroupNr: $scope.trialGroupNr, Crop: $scope.selectedWeed.Name, LogChemName: $scope.LogChemName, LogChemDosages: $scope.LogChemDosages, TrialComment: $scope.comment, Treatments: $scope.Treatments });
 
         window.location.href = "#!/addSubBlock/";
     }

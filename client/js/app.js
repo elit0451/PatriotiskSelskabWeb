@@ -25,23 +25,17 @@ app.run(['$rootScope', '$http', function ($rootScope, $http) {
     $rootScope.trialTypes = [];
 
 
-    $http.get("data/TrialTypes.json")
+    $http.get("http://localhost:50458/GetTrialTypes")
         .then(function (response) {
-            angular.forEach(response.data, function (value, key) {
-                $rootScope.trialTypes.push(value);
-            });
+                $rootScope.trialTypes = response.data;
         });
 
     $rootScope.trialTypeChange = function () {
         $rootScope.crops = [];
-
-        $http.get("data/Crops.json")
+        $http.get("http://localhost:50458/GetTrialTypeCrops/" + $rootScope.selectedTrialType.Id)
             .then(function (response) {
-                angular.forEach(response.data, function (value, key) {
-                    if ($rootScope.selectedTrialType.TrialTypeID == value.TrialTypeID) {
-                        $rootScope.crops.push(value);
-                    }
-                });
+                $rootScope.crops = response.data;
+                console.log(response.data);
             });
     };
 
@@ -49,13 +43,9 @@ app.run(['$rootScope', '$http', function ($rootScope, $http) {
         $rootScope.years = [];
 
         if ($rootScope.selectedCrop != undefined) {
-            $http.get("data/Years.json")
+            $http.get("http://localhost:50458/GetCropYears/" + $rootScope.selectedTrialType.Id + "/" + $rootScope.selectedCrop.ID)
                 .then(function (response) {
-                    angular.forEach(response.data, function (value, key) {
-                        if ($rootScope.selectedCrop.CropID == value.CropID) {
-                            $rootScope.years.push(value);
-                        }
-                    });
+                    $rootScope.years = response.data;
                 });
         }
     };
@@ -67,21 +57,21 @@ app.run(['$rootScope', '$http', function ($rootScope, $http) {
     };
 
     $rootScope.LoadTrialTypes = function () {
-        return $http.get("data/TrialTypes.json")
+        return $http.get("http://localhost:50458/GetTrialTypes")
             .then(function (response) {
                 $rootScope.TrialTypes = response.data;
             });
     };
 
     $rootScope.LoadCrops = function () {
-        return $http.get("data/Crops.json")
+        return $http.get("http://localhost:50458/GetAllWeeds")
             .then(function (response) {
                 $rootScope.Crops = response.data;
             });
     };
 
     $rootScope.LoadYears = function () {
-        return $http.get("data/Years.json")
+        return $http.get("http://localhost:50458/GetYears")
             .then(function (response) {
                 $rootScope.Years = response.data;
             });
@@ -94,19 +84,33 @@ app.run(['$rootScope', '$http', function ($rootScope, $http) {
             });
     };
 
-    $rootScope.LoadTrialGroups = function () {
-        return $http.get("data/TrialGroups.json")
+    $rootScope.LoadTrialGroup = function (trialgroupid) {
+        return $http.get("http://localhost:50458/GetTrialGroup/" + trialgroupid)
             .then(function (response) {
-                $rootScope.TrialGroups = response.data;
+                console.log("Started gathering trialgroup");
+                $rootScope.TrialGroup = response.data;
+                $rootScope.TrialGroup.Treatments = [];
+                $rootScope.TrialGroup.LogChemName = "";
+                $rootScope.TrialGroup.LogChemDosages = [];
+                console.log(response.data);
             });
     };
 
-    $rootScope.LoadTreatments = function () {
-        return $http.get("data/Treatments.json")
+    $rootScope.LoadTrialGroupTreatments = function (trialgroupid) {
+        return $http.get("http://localhost:50458/GetTrialGroupTreatments/" + trialgroupid)
             .then(function (response) {
-                $rootScope.Treatments = response.data;
+                var treatments = response.data;
+                angular.forEach(treatments, function (treatmentValue, treatmentKey) {
+                    $rootScope.TrialGroup.Treatments.push(treatmentValue);
+                    console.log(treatmentValue);
+                    if (treatmentValue.DoseLog === true) {
+                        $rootScope.TrialGroup.LogChemName = treatmentValue.ProductName;
+                        $rootScope.TrialGroup.LogChemDosages.push(treatmentValue.ProductDose);
+                    }
+                    $rootScope.TrialGroup.LogChemDosages = $rootScope.TrialGroup.LogChemDosages.sort().reverse();
+                });
             });
-    };
+    }
 }]);
 
 app.controller('mainController', function ($rootScope, $scope, $http) {
@@ -117,11 +121,9 @@ app.controller('mainController', function ($rootScope, $scope, $http) {
     $rootScope.crops = undefined;
     $rootScope.years = undefined;
 
-    $http.get("data/TopTypeResults.json")
+    $http.get("http://localhost:50458/GetTopResults")
         .then(function (response) {
-            angular.forEach(response.data, function (value, key) {
-                $scope.topResults.push(value);
-            });
+                $scope.topResults = response.data;
         });
 
 });
@@ -147,71 +149,35 @@ app.controller('trialGroupController', function ($rootScope, $scope, $http, $q, 
     $scope.Stages = [];
     $scope.SimilarTrialGroups = [];
 
-    if ($rootScope.TrialGroups == undefined) {
-        promises.push($rootScope.LoadTrialGroups());
-    }
-
-    if ($rootScope.Treatments == undefined) {
-        promises.push($rootScope.LoadTreatments());
-    }
+    promises.push($rootScope.LoadTrialGroup($routeParams.trialGroupID));
+    promises.push($rootScope.LoadTrialGroupTreatments($routeParams.trialGroupID));
 
     $q.all(promises).then(function () {
-        var flag = false;
-
-        angular.forEach($rootScope.TrialGroups, function (value, key) {
-            value.Treatments = [];
-            value.LogChemName = "";
-            value.LogChemDosages = [];
-
-            if (value.TrialGroupID == $routeParams.trialGroupID) {
-                $scope.trialGroup = value;
-                flag = true;
-
-                angular.forEach($rootScope.Treatments, function (treatmentValue, treatmentKey) {
-                    if (treatmentValue.TrialGroupID == $scope.trialGroup.TrialGroupID) {
-                        $scope.trialGroup.Treatments.push(treatmentValue);
-                        if (treatmentValue.DoseLog === true) {
-                            $scope.trialGroup.LogChemName = treatmentValue.ProductName;
-                            $scope.trialGroup.LogChemDosages.push(treatmentValue.ProductDose);
-                        }
-                    }
-                    $scope.trialGroup.LogChemDosages = $scope.trialGroup.LogChemDosages.sort().reverse();
-                });
-
-                angular.forEach($scope.trialGroup.Treatments, function (value, key) {
-
-                    var found = $scope.Stages.some(function (el) {
-                        return el.id === value.TreatmentID;
-                    });
-
-                    if (!found) {
-                        $scope.Stages.push({ id: value.TreatmentID, stageName: value.TreatmentStage, stageDate: value.TreatmentDate, stageComment: value.Comment, products: [] });
-                    }
-
-                    angular.forEach($scope.Stages, function (stageValue, stageKey) {
-                        if (stageValue.id == value.TreatmentID) {
-                            var dose;
-
-                            if (value.DoseLog == true) dose = "LOG";
-                            else dose = value.ProductDose;
-
-                            found = stageValue.products.some(function (el) {
-                                return el.productName === value.ProductName;
-                            });
-
-                            if (!found)
-                                stageValue.products.push({ productName: value.ProductName, dosage: dose });
-                        }
-                    });
-
-                });
-            }
-        });
-
-        if (flag == false) {
-            window.location.href = "#!/";
+        if ($rootScope.TrialGroup == undefined) {
+            window.location.href = "/";
         }
-        else {
+
+        angular.forEach($rootScope.TrialGroup.Treatments, function (value, key) {
+            $scope.Stages.push({ id: value.TreatmentID, stageName: value.TreatmentStage, stageDate: value.TreatmentDate, stageComment: value.Comment, products: [] });
+
+            angular.forEach($scope.Stages, function (stageValue, stageKey) {
+                if (stageValue.id == value.TreatmentID) {
+                    angular.forEach(value.Products, function (product, productKey) {
+                        var dose;
+                        if (product.DoseLog == true) dose = "LOG";
+                        else dose = product.ProductDose;
+
+                        found = stageValue.products.some(function (el) {
+                            return el.productName === product.TrtProduct.Name;
+                        });
+
+                        if (!found)
+                            stageValue.products.push({ productName: product.TrtProduct.Name, dosage: dose });
+                    });
+                }
+            });
+
+        });
             var similiarTrialGroups = [];
             angular.forEach($rootScope.TrialGroups, function (value, key) {
                 if (value.TrialTypeName == $scope.trialGroup.TrialTypeName && value.TrialGroupID != $scope.trialGroup.TrialGroupID) {
@@ -237,7 +203,6 @@ app.controller('trialGroupController', function ($rootScope, $scope, $http, $q, 
                     }
                 });
             });
-        }
 
     });
 });
