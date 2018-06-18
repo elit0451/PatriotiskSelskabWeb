@@ -129,10 +129,12 @@ app.run(['$rootScope', '$http', function ($rootScope, $http) {
                             var treatments = response.data;
                             angular.forEach(treatments, function (treatmentValue, treatmentKey) {
                                 value.Treatment.push(treatmentValue);
-                                if (treatmentValue.DoseLog === true) {
-                                    value.LogChemName = treatmentValue.ProductName;
-                                    value.LogChemDosages.push(treatmentValue.ProductDose);
-                                }
+                                angular.forEach(treatmentValue.Products, function (productValue, productKey) {
+                                    if (productValue.DoseLog === true) {
+                                        value.LogChemName = productValue.TrtProduct.Name;
+                                        value.LogChemDosages.push(productValue.ProductDose);
+                                    }
+                                });
                                 value.LogChemDosages = value.LogChemDosages.sort().reverse();
                             });
                         });
@@ -158,11 +160,12 @@ app.run(['$rootScope', '$http', function ($rootScope, $http) {
                 var treatments = response.data;
                 angular.forEach(treatments, function (treatmentValue, treatmentKey) {
                     $rootScope.TrialGroup.Treatments.push(treatmentValue);
-                    console.log(treatmentValue);
-                    if (treatmentValue.DoseLog === true) {
-                        $rootScope.TrialGroup.LogChemName = treatmentValue.ProductName;
-                        $rootScope.TrialGroup.LogChemDosages.push(treatmentValue.ProductDose);
-                    }
+                    angular.forEach(treatmentValue.Products, function (productValue, productKey) {
+                        if (productValue.DoseLog === true) {
+                            $rootScope.TrialGroup.LogChemName = productValue.TrtProduct.Name;
+                            $rootScope.TrialGroup.LogChemDosages.push(productValue.ProductDose);
+                        }
+                    });
                     $rootScope.TrialGroup.LogChemDosages = $rootScope.TrialGroup.LogChemDosages.sort().reverse();
                 });
             });
@@ -285,7 +288,7 @@ app.controller('blockController', function ($scope, $routeParams, $http, $rootSc
                         $rootScope.addSubBlocks = [];
                     }
 
-                    $rootScope.addSubBlocks.push({ subBlockChar: subBlock.SubBlockChar, subBlockLength: subBlock.SubBlockLength, subBlockWidth: subBlock.SubBlockWidth, comment: subBlock.Comment, trialGroups: undefined, PosL: subBlock.PosL, PosW: subBlock.PosW });
+                    $rootScope.addSubBlocks.push({ subBlockChar: subBlock.SubBlockChar, subBlockLength: subBlock.SubBlockLength, subBlockWidth: subBlock.SubBlockWidth, comment: subBlock.Comment, trialGroups: undefined, PosL: Math.round(subBlock.PosL), PosW: Math.round(subBlock.PosW) });
                 }
             });
             window.location.href = "#!/addBlock";
@@ -317,7 +320,7 @@ app.controller('subBlockController', function ($scope, $rootScope, $routeParams,
                     $rootScope.addTrialGroups = [];
                 $rootScope.addTrialGroups.push({ TrialGroupNr: value.TrialGroupNr, Crop: value.CropName, LogChemName: value.LogChemName, LogChemDosages: value.LogChemDosages, TrialComment: value.Comment, Treatments: value.Treatment })
             });
-            $rootScope.addSubBlock = { subBlockChar: $scope.SubBlock.SubBlockChar, subBlockLength: $scope.SubBlock.SubBlockLength, subBlockWidth: $scope.SubBlock.SubBlockWidth, comment: $scope.SubBlock.Comment, trialGroups: $rootScope.addTrialGroups, PosL: $scope.SubBlock.PosL, PosW: $scope.SubBlock.PosW };
+            $rootScope.addSubBlock = { subBlockChar: $scope.SubBlock.SubBlockChar, subBlockLength: $scope.SubBlock.SubBlockLength, subBlockWidth: $scope.SubBlock.SubBlockWidth, comment: $scope.SubBlock.Comment, trialGroups: $rootScope.addTrialGroups, PosL: Math.round($scope.SubBlock.PosL), PosW: Math.round($scope.SubBlock.PosW) };
 
             window.location.href = "#!/addSubBlock";
         };
@@ -373,7 +376,7 @@ app.controller('trialGroupController', function ($scope, $rootScope, $routeParam
                     $rootScope.addTrialGroups = [];
                 $rootScope.addTrialGroups.push({ TrialGroupNr: value.TrialGroupNr, Crop: value.CropName, LogChemName: value.LogChemName, LogChemDosages: value.LogChemDosages, TrialComment: value.Comment, Treatments: value.Treatment })
             });
-            $rootScope.addSubBlock = { subBlockChar: $scope.SubBlock.SubBlockChar, subBlockLength: $scope.SubBlock.SubBlockLength, subBlockWidth: $scope.SubBlock.SubBlockWidth, comment: $scope.SubBlock.Comment, trialGroups: $rootScope.addTrialGroups, PosL: $scope.SubBlock.PosL, PosW: $scope.SubBlock.PosW };
+            $rootScope.addSubBlock = { subBlockChar: $scope.SubBlock.SubBlockChar, subBlockLength: $scope.SubBlock.SubBlockLength, subBlockWidth: $scope.SubBlock.SubBlockWidth, comment: $scope.SubBlock.Comment, trialGroups: $rootScope.addTrialGroups, PosL: Math.round($scope.SubBlock.PosL), PosW: Math.round($scope.SubBlock.PosW) };
 
             window.location.href = "#!/addSubBlock";
         };
@@ -389,7 +392,7 @@ app.controller('addYearController', function ($scope, $routeParams, $rootScope,$
             value.fieldBlockYear = $routeParams.year;
             var newBlock = {FieldBlockID: 0, BlockChar:value.blockChar, FieldBlockYear:value.fieldBlockYear, FieldBlockLength:value.blockLength, FieldBlockWidth:value.blockWidth, Comment:value.comment, SubBlocks:[]};
             angular.forEach(value.subBlocks, function (subblock, keys) {
-                var newSubBlock = {SubBlockID:0, SubBlockChar:subblock.subBlockChar, AmountOfTrialGroups:16, LastNrOfTrialGroup:16, SubBlockLength:subblock.subBlockLength, SubBlockWidth:subblock.subBlockWidth, PosL:subblock.PosL, PosW:subblock.PosW,Comment:subblock.comment,SubBlockTrialType:{Name:"Weed"},TrialGroups:[]};
+                var newSubBlock = {SubBlockID:0, SubBlockChar:subblock.subBlockChar, AmountOfTrialGroups:16, LastNrOfTrialGroup:16, SubBlockLength:subblock.subBlockLength, SubBlockWidth:subblock.subBlockWidth, PosL:Math.round(subblock.PosL), PosW:Math.round(subblock.PosW),Comment:subblock.comment,SubBlockTrialType:{Name:"Weed"},TrialGroups:[]};
                 angular.forEach(subblock.trialGroups, function (trialgroup, keyt) {
                     var newTrialGroup = {TrialGroupID:0, TrialGroupCrop:{name:trialgroup.Crop}, TrialGroupNr:trialgroup.TrialGroupNr, Comment:trialgroup.TrialComment, Treatments:[]};
                     angular.forEach(trialgroup.Treatments, function (treatment, keytr) {
@@ -459,7 +462,8 @@ app.controller('addBlockController', function ($scope, $rootScope) {
             var subBlPercWidth = subBlWidth * 100 / blWidth;
             var leftPos = subBlockElm.position().left * $scope.width / blWidth;
             var topPos = subBlockElm.position().top * $scope.length / blHeight;
-            $rootScope.addSubBlock = { subBlockLength: Math.floor($scope.length * subBlPercHeight / 100), subBlockWidth: Math.floor($scope.width * subBlPercWidth / 100), PosL: topPos, PosW: leftPos };
+            $rootScope.addSubBlock = { subBlockLength: Math.floor($scope.length * subBlPercHeight / 100), subBlockWidth: Math.floor($scope.width * subBlPercWidth / 100), PosL: Math.round(topPos), PosW: Math.round(leftPos) };
+            $rootScope.addTrialGroups = [];
             window.location.href = "#!/addSubBlock/";
         }
     }
@@ -491,7 +495,7 @@ app.controller('addSubBlockController', function ($scope, $rootScope) {
     }
 
     $scope.saveSubBlock = function () {
-        $rootScope.addSubBlock = { subBlockChar: $scope.subBlockChar, subBlockLength: $scope.addSubBlock.subBlockLength, subBlockWidth: $scope.addSubBlock.subBlockWidth, comment: $scope.comment, trialGroups: $scope.addTrialGroups, PosL: $scope.addSubBlock.PosL, PosW: $scope.addSubBlock.PosW }
+        $rootScope.addSubBlock = { subBlockChar: $scope.subBlockChar, subBlockLength: $scope.addSubBlock.subBlockLength, subBlockWidth: $scope.addSubBlock.subBlockWidth, comment: $scope.comment, trialGroups: $scope.addTrialGroups, PosL: Math.round($scope.addSubBlock.PosL), PosW: Math.round($scope.addSubBlock.PosW) }
         $rootScope.addSubBlocks.push($rootScope.addSubBlock);
         window.location.href = "#!/addBlock/";
     };
@@ -517,12 +521,15 @@ app.controller('addTrialGroupController', function ($scope, $rootScope, $http) {
 
 
         $scope.DisplayProducts = JSON.parse(JSON.stringify($scope.Products));
-        $scope.DisplayProducts.push({ productName: $scope.logChemName, productDose: 'LOG', productUnit: 0, doseLog: true });
-        $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose1, productUnit: $scope.logDoseUnit, doseLog: true });
-        $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose2, productUnit: $scope.logDoseUnit, doseLog: true });
-        $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose3, productUnit: $scope.logDoseUnit, doseLog: true });
-        $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose4, productUnit: $scope.logDoseUnit, doseLog: true });
-        $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose5, productUnit: $scope.logDoseUnit, doseLog: true });
+        if($scope.logChemName != undefined && $scope.logChemName != "")
+        {
+            $scope.DisplayProducts.push({ productName: $scope.logChemName, productDose: 'LOG', productUnit: 0, doseLog: true });
+            $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose1, productUnit: $scope.logDoseUnit, doseLog: true });
+            $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose2, productUnit: $scope.logDoseUnit, doseLog: true });
+            $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose3, productUnit: $scope.logDoseUnit, doseLog: true });
+            $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose4, productUnit: $scope.logDoseUnit, doseLog: true });
+            $scope.Products.push({ productName: $scope.logChemName, productDose: $scope.logDose5, productUnit: $scope.logDoseUnit, doseLog: true });
+        }
 
 
         $scope.Treatments.push({ Stage: $scope.stage, Date: $scope.date, Products: $scope.Products, DisplayProducts: $scope.DisplayProducts, Comment: $scope.treatmentComment });
